@@ -11,6 +11,9 @@
 
 
 #include "image_io.hpp"
+#include "image_type_conversion.hpp"
+#include "image_enhancement.hpp"
+#include "geometric_transform.hpp"
 
 
 int main(int argc, char** argv)
