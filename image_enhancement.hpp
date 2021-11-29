@@ -110,3 +110,5 @@ cv::Mat ThresholdTransform(const cv::Mat& input_image, const double& threshold);
 *                      The output image
 */
 cv::Mat WindowTransform(const cv::Mat& input_image, const double& lower_threshold, const double& upper_threshold);
+
+
