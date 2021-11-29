@@ -18,3 +18,13 @@ void TestReadImage()
 }
 
 
+void TestDisplayImage()
+{
+}
+
+
+void TestPrintImageInfo()
+{
+}
+
+
