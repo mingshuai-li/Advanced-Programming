@@ -28,3 +28,58 @@ void TestPrintImageInfo()
 }
 
 
+void BrightnessTransform()
+{
+}
+
+
+void InverseTransform()
+{
+}
+
+
+void GammaTransform()
+{
+}
+
+
+void LogTransform()
+{
+}
+
+
+void NormalizationTransform()
+{
+}
+
+
+void ThresholdTransform()
+{
+}
+
+
+void WindowTransform()
+{
+}
+
+
+void Resize()
+{
+}
+
+
+void Rotate()
+{
+}
+
+
+void FlipLeftRight()
+{
+}
+
+
+void FlipUpDown()
+{
+}
+
+
