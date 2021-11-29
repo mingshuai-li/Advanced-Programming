@@ -34,7 +34,69 @@ void TestDisplayImage();
 void TestPrintImageInfo();
 
 
+/*
+* Tests the BrightnessTransform()
+*/
+void BrightnessTransform();
 
 
+/*
+* Tests the InverseTransform()
+*/
+void InverseTransform();
+
+
+/*
+* Tests the GammaTransform()
+*/
+void GammaTransform();
+
+
+/*
+* Tests the LogTransform()
+*/
+void LogTransform();
+
+
+/*
+* Tests the NormalizationTransform()
+*/
+void NormalizationTransform();
+
+
+/*
+* Tests the ThresholdTransform()
+*/
+void ThresholdTransform();
+
+
+/*
+* Tests the WindowTransform()
+*/
+void WindowTransform();
+
+
+/*
+* Tests the Resize()
+*/
+void Resize();
+
+
+/*
+* Tests the Rotate()
+*/
+void Rotate();
+
+
+/*
+* Tests the FlipLeftRight()
+*/
+void FlipLeftRight();
+
+
+/*
+* Tests the FlipUpDown()
+*/
+void FlipUpDown();
 
 
