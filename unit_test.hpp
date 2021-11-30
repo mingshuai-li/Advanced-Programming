@@ -33,6 +33,18 @@ void TestConvertRGB2GrayScale();
 
 
 /*
+* Tests the ConvertUchar2DoubleC1()
+*/
+void TestConvertUchar2DoubleC1();
+
+
+/*
+* Tests MapDouble2Uchar()
+*/
+void TestMapDouble2Uchar();
+
+
+/*
 * Tests the BrightnessTransform()
 */
 void BrightnessTransform();
