@@ -13,17 +13,15 @@
 #include "unit_test.hpp"
 
 
-void TestReadImage()
+void TestImageIO()
 {
+    cv::Mat image = ReadImage("NewYork.jpg");
+    DisplayImage(image, "New York!");
+    PrintImageInfo(image);
 }
 
 
-void TestDisplayImage()
-{
-}
-
-
-void TestPrintImageInfo()
+void TestConvertRGB2GrayScale()
 {
 }
 
