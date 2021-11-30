@@ -48,3 +48,5 @@ cv::Mat ConvertUchar2DoubleC1(const cv::Mat& input_image);
 *                       The output value
 */
 uchar MapDouble2Uchar(double n);
+
+
