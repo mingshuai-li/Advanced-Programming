@@ -35,6 +35,12 @@ void TestPrintImageInfo();
 
 
 /*
+* Tests the ConvertRGB2GrayScale()
+*/
+void ConvertRGB2GrayScale();
+
+
+/*
 * Tests the BrightnessTransform()
 */
 void BrightnessTransform();
