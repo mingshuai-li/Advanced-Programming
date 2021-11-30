@@ -19,12 +19,7 @@
 
 int main(int argc, char** argv)
 {
-
-    cv::Mat image = ReadImage("NewYork.jpg");
-    DisplayImage(image, "New York!");
-    PrintImageInfo(image);
     return 0;
-
 }
 
 
