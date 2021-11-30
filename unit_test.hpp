@@ -14,30 +14,22 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "image_io.hpp"
+#include "image_type_conversion.hpp"
+#include "image_enhancement.hpp"
+#include "geometric_transform.hpp"
+#include "filtering.hpp"
 
 
 /*
-* Tests the ReadImage()
+* Tests the ReadImage(), the DisplayImage() and the PrintImageInfo()
 */
-void TestReadImage();
-
-
-/*
-* Tests the DisplayImage()
-*/
-void TestDisplayImage();
-
-
-/*
-* Tests the PrintImageInfo()
-*/
-void TestPrintImageInfo();
+void TestImageIO();
 
 
 /*
 * Tests the ConvertRGB2GrayScale()
 */
-void ConvertRGB2GrayScale();
+void TestConvertRGB2GrayScale();
 
 
 /*
