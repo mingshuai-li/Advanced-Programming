@@ -15,14 +15,17 @@
 
 void TestImageIO()
 {
-    cv::Mat image = ReadImage("NewYork.jpg");
-    DisplayImage(image, "New York!");
-    PrintImageInfo(image);
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    DisplayImage(input_image, "New York!");
+    PrintImageInfo(input_image);
 }
 
 
 void TestConvertRGB2GrayScale()
 {
+  cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat output_image = ConvertRGB2GrayScale(input_image);
+    DisplayImage(output_image, "New York!");
 }
 
 
