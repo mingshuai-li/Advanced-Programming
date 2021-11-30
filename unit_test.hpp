@@ -98,3 +98,39 @@ void FlipLeftRight();
 void FlipUpDown();
 
 
+/*
+* Tests the Convolve()
+*/
+void TestConvolve();
+
+
+/*
+* Tests the LowPassFilter()
+*/
+void TestLowPassFilter();
+
+
+/*
+* Tests the HighPassFilter()
+*/
+void TestHighPassFilter();
+
+
+/*
+* Tests the BandPassFilter()
+*/
+void TestBandPassFilter();
+
+
+/*
+* Tests the GaussianFilter()
+*/
+void TestGaussianFilter();
+
+
+/*
+* Tests the LaplacianFilter()
+*/
+void LaplacianFilter();
+
+
