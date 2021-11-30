@@ -42,3 +42,25 @@ cv::Mat ConvertRGB2GrayScale(const cv::Mat& input_image)
 }
 
 
+cv::Mat ConvertUchar2DoubleC1(const cv::Mat& input_image)
+{
+    int image_height = input_image.rows;
+    int image_width = input_image.cols;
+
+    cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_64FC1);
+
+    for (int i = 0; i < image_height; i++)
+        for (int j = 0; j < image_width; j++)
+            output_image.at<double>(i, j) = static_cast<double>(input_image.at<uchar>(i, j));
+    
+    return output_image;
+
+}
+
+
+uchar MapDouble2Uchar(double n)
+{
+    return (n > 255.0) ? static_cast<uchar>(255) : ((n < 0.0) ? static_cast<uchar>(0) : static_cast<uchar>(n));
+}
+
+
