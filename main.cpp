@@ -14,6 +14,7 @@
 #include "image_type_conversion.hpp"
 #include "image_enhancement.hpp"
 #include "geometric_transform.hpp"
+#include "filtering.hpp"
 
 
 int main(int argc, char** argv)
