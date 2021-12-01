@@ -14,11 +14,6 @@
 
 cv::Mat Resize(const cv::Mat& input_image, double kx, double ky)
 {  
-  /*int image_height = input_image.rows;
-  int image_width = input_image.cols;
-  cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
-  
-  cv::resize(input_image, output_image, cv::Size(output_height, output_width));*/
 
   int row = cvRound(input_image.rows * kx), col = cvRound(input_image.cols * ky);
 	cv::Mat output_image(row, col, input_image.type());
@@ -40,16 +35,6 @@ cv::Mat Resize(const cv::Mat& input_image, double kx, double ky)
 
 cv::Mat Rotate(const cv::Mat& input_image, const double& angle)
 {
-  /*cv::Mat output_image;
-
-  cv::Size input_image_sz = input_image.size();
-  cv::Size output_image_sz(input_image_sz.height, input_image_sz.width);
-  int len = std::max(input_image.cols, input_image.rows);
-
-  cv::Point2f center(len / 2, len / 2);
-  cv::Mat rot_mat = cv::getRotationMatrix2D(center, angle, 1.0);
-
-  cv::warpAffine(input_image, output_image, rot_mat, output_image_sz);*/
 
 	int len = (int)(sqrtf(pow(input_image.rows, 2) + pow(input_image.cols, 2)) + 0.5);
  
