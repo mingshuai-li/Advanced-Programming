@@ -107,3 +107,46 @@ void FlipUpDown()
 }
 
 
+void TestConvolve()
+{
+    cv::Mat kernel = cv::Mat::ones(3, 3, CV_64FC1);
+    for (int i = 0; i < 3; i++)
+        for (int j = 0; j < 3; j++)
+            kernel.at<double>(i, j) /= 9;
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat output_image = Convolve(input_image, kernel);
+    DisplayImage(output_image, "New York!");
+}
+
+
+void TestLowPassFilter()
+{
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat output_image = LowPassFilter(input_image, 3, 3);
+    DisplayImage(output_image, "New York!");
+}
+
+
+void TestHighPassFilter()
+{
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat output_image = HighPassFilter(input_image);
+    DisplayImage(output_image, "New York!");
+}
+
+
+void TestBandPassFilter()
+{
+}
+
+
+void TestGaussianFilter()
+{
+}
+
+
+void LaplacianFilter()
+{
+}
+
+
