@@ -47,67 +47,67 @@ void TestMapDouble2Uchar();
 /*
 * Tests the BrightnessTransform()
 */
-void BrightnessTransform();
+void TestBrightnessTransform();
 
 
 /*
 * Tests the InverseTransform()
 */
-void InverseTransform();
+void TestInverseTransform();
 
 
 /*
 * Tests the GammaTransform()
 */
-void GammaTransform();
+void TestGammaTransform();
 
 
 /*
 * Tests the LogTransform()
 */
-void LogTransform();
+void TestLogTransform();
 
 
 /*
 * Tests the NormalizationTransform()
 */
-void NormalizationTransform();
+void TestNormalizationTransform();
 
 
 /*
 * Tests the ThresholdTransform()
 */
-void ThresholdTransform();
+void TestThresholdTransform();
 
 
 /*
 * Tests the WindowTransform()
 */
-void WindowTransform();
+void TestWindowTransform();
 
 
 /*
 * Tests the Resize()
 */
-void Resize();
+void TestResize();
 
 
 /*
 * Tests the Rotate()
 */
-void Rotate();
+void TestRotate();
 
 
 /*
 * Tests the FlipLeftRight()
 */
-void FlipLeftRight();
+void TestFlipLeftRight();
 
 
 /*
 * Tests the FlipUpDown()
 */
-void FlipUpDown();
+void TestFlipUpDown();
 
 
 /*
