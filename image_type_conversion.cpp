@@ -15,6 +15,7 @@
 
 cv::Mat ConvertRGB2GrayScale(const cv::Mat& input_image)
 {
+
     int image_height = input_image.rows;
     int image_width = input_image.cols;
 
@@ -46,6 +47,7 @@ cv::Mat ConvertRGB2GrayScale(const cv::Mat& input_image)
 
 cv::Mat ConvertUchar2DoubleC1(const cv::Mat& input_image)
 {
+
     int image_height = input_image.rows;
     int image_width = input_image.cols;
 
