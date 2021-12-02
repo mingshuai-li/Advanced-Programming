@@ -84,6 +84,7 @@ cv::Mat LowPassFilter(const cv::Mat& input_image, const int& kernel_height, cons
 
 cv::Mat HighPassFilter(const cv::Mat& input_image)
 {
+
     cv::Mat kernel_height = cv::Mat::zeros(3, 3, CV_64FC1);
     kernel_height.at<double>(0, 0) = 1.0; kernel_height.at<double>(0, 1) = 2.0; kernel_height.at<double>(0, 2) = 1.0;
     kernel_height.at<double>(2, 0) = -1.0; kernel_height.at<double>(2, 1) = -2.0; kernel_height.at<double>(2, 2) = -1.0;
@@ -126,6 +127,99 @@ cv::Mat HighPassFilter(const cv::Mat& input_image)
         for (int j = 0; j < image_width; j++)
             output_image.at<uchar>(i, j) = static_cast<uchar>(coefficient1 * gradient_magnitude.at<double>(i, j) + coefficient2);
     
+    return output_image;
+
+}
+
+
+cv::Mat BandPassFilter(const cv::Mat& input_image, const double& central_freq, const double& band_width)
+{
+
+    int image_height = input_image.rows;
+    int image_width = input_image.cols;
+
+    cv::Mat input_image_double = ConvertUchar2DoubleC1(input_image); 
+
+    cv::Mat frequency_domain_image = cv::Mat::zeros(image_height, image_width, CV_64FC1);
+
+    cv::dft(input_image_double, frequency_domain_image);
+
+    int frequency_domain_height = frequency_domain_image.rows;
+    int frequency_domain_width = frequency_domain_image.cols;
+
+    for (int i = 0; i < frequency_domain_height; i++)
+    {
+        for (int j = 0; j < frequency_domain_width; j++)
+        {
+            if ((frequency_domain_image.at<double>(i, j) >= central_freq - band_width / 2) && (frequency_domain_image.at<double>(i, j) <= central_freq + band_width / 2))
+                frequency_domain_image.at<double>(i, j) = 0.0;
+        }
+    }
+
+    cv::Mat output_image_double = cv::Mat::zeros(image_height, image_width, CV_64FC1);
+    cv::idft(frequency_domain_image, output_image_double);
+
+    cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
+
+    for (int i = 0; i < image_height; i++)
+        for (int j = 0; j < image_width; j++)
+            output_image.at<uchar>(i, j) = static_cast<uchar>((output_image_double.at<double>(i, j) > 255.0) ? 255 : output_image_double.at<double>(i, j));
+
+    return output_image;
+
+}
+
+
+cv::Mat GaussianFilter(const cv::Mat& input_image, const int& kernel_height, const int& kernel_width, const double& kernel_sigma)
+{
+
+    cv::Mat kernel = cv::Mat::zeros(kernel_height, kernel_width, CV_64FC1);
+
+    int half_kheight = kernel_height / 2;
+    int half_kwidth = kernel_width / 2;
+    // The Gaussian filter formula: value = coefficient1 * e^((-(i - half_kheight)^2 - (j - half_kwidth)^2) * coefficient2)
+    double coefficient1 = 1 / (2 * PI * kernel_sigma * kernel_sigma);
+    double coefficient2 = 1 / (2 * kernel_sigma * kernel_sigma);
+    // Stores the sum of the kernel's values
+    double sum = 0.0;
+    // Stores the (i - half_kheight)^2 and the (j - half_kwidth)^2
+    double offset_i = 0.0;
+    double offset_j = 0.0;
+    double current_kernel_value = 0.0;
+
+    for (int i = 0; i < kernel_height; i++)
+    {
+        offset_i = pow(i - half_kheight, 2);
+        for (int j = 0; j < kernel_width; j++)
+        {
+            offset_j = pow(j - half_kwidth, 2);
+            current_kernel_value = coefficient1 * pow(NATURAL_CONSTANT, (-offset_i - offset_j) * coefficient2);
+            kernel.at<double>(i, j) = current_kernel_value;
+            sum += current_kernel_value;
+        }
+    }
+
+    for (int i = 0; i < kernel_height; i++)
+        for (int j = 0; j < kernel_width; j++)
+            kernel.at<double>(i, j) /= sum;
+    
+    cv::Mat output_image = Convolve(input_image, kernel);
+
+    return output_image;
+
+}
+
+
+cv::Mat LaplacianFilter(const cv::Mat& input_image)
+{
+
+    cv::Mat kernel = cv::Mat::zeros(3, 3, CV_64FC1);
+    kernel.at<double>(0, 1) = -1.0; kernel.at<double>(1, 0) = -1.0;
+    kernel.at<double>(1, 2) = -1.0; kernel.at<double>(2, 1) = -1.0;
+    kernel.at<double>(1, 1) = 4.0;
+
+    cv::Mat output_image = Convolve(input_image, kernel);
+
     return output_image;
 
 }
