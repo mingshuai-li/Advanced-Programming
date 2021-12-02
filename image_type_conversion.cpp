@@ -20,6 +20,7 @@ cv::Mat ConvertRGB2GrayScale(const cv::Mat& input_image)
 
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
 
+    // The weights utilized to map the RGB channels to the grayscale channel
     double weights[3] = {0.0722, 0.7152, 0.2126};
     double weighted_sum = 0.0;
 
@@ -30,6 +31,7 @@ cv::Mat ConvertRGB2GrayScale(const cv::Mat& input_image)
             const cv::Vec3b& channel = input_image.at<cv::Vec3b>(i, j);
             weighted_sum = 0.0;
 
+            // Computes the grayscale channel value
             for (int k = 0; k < 3; k++)
                 weighted_sum += channel[k] * weights[k];
 
