@@ -84,6 +84,7 @@ cv::Mat Rotate(const cv::Mat& input_image, const double& angle)
 
 cv::Mat FlipLeftRight(const cv::Mat& input_image)
 {
+
     int image_height = input_image.rows;
     int image_width = input_image.cols;
     // Make a copy of the input image
@@ -95,11 +96,13 @@ cv::Mat FlipLeftRight(const cv::Mat& input_image)
             output_image.at<uchar>(i, j) = input_image.at<uchar>(i, image_width - j -1);
 
     return output_image;
+
 }
 
 
 cv::Mat FlipUpDown(const cv::Mat& input_image)
 {
+
     int image_height = input_image.rows;
     int image_width = input_image.cols;
     // Make a copy of the input image
@@ -111,4 +114,7 @@ cv::Mat FlipUpDown(const cv::Mat& input_image)
             output_image.at<uchar>(i, j) = input_image.at<uchar>(image_height - i - 1, j);
 
     return output_image;
+
 }
+
+
