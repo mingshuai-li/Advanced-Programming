@@ -52,57 +52,61 @@ void TestMapDouble2Uchar()
 }
 
 
-void BrightnessTransform()
+void TestBrightnessTransform()
+{
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = BrightnessTransform(input_image, 30);
+    DisplayImage(output_image, "New York!");
+}
+
+
+void TestInverseTransform()
 {
 }
 
 
-void InverseTransform()
+void TestGammaTransform()
 {
 }
 
 
-void GammaTransform()
+void TestLogTransform()
 {
 }
 
 
-void LogTransform()
+void TestNormalizationTransform()
 {
 }
 
 
-void NormalizationTransform()
+void TestThresholdTransform()
 {
 }
 
 
-void ThresholdTransform()
+void TestWindowTransform()
 {
 }
 
 
-void WindowTransform()
+void TestResize()
 {
 }
 
 
-void Resize()
+void TestRotate()
 {
 }
 
 
-void Rotate()
+void TestFlipLeftRight()
 {
 }
 
 
-void FlipLeftRight()
-{
-}
-
-
-void FlipUpDown()
+void TestFlipUpDown()
 {
 }
 
@@ -114,7 +118,8 @@ void TestConvolve()
         for (int j = 0; j < 3; j++)
             kernel.at<double>(i, j) /= 9;
     cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat output_image = Convolve(input_image, kernel);
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = Convolve(grayscale_input_image, kernel);
     DisplayImage(output_image, "New York!");
 }
 
@@ -122,7 +127,8 @@ void TestConvolve()
 void TestLowPassFilter()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat output_image = LowPassFilter(input_image, 3, 3);
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = LowPassFilter(grayscale_input_image, 3, 3);
     DisplayImage(output_image, "New York!");
 }
 
@@ -130,23 +136,36 @@ void TestLowPassFilter()
 void TestHighPassFilter()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat output_image = HighPassFilter(input_image);
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = HighPassFilter(grayscale_input_image);
     DisplayImage(output_image, "New York!");
 }
 
 
 void TestBandPassFilter()
 {
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = BandPassFilter(grayscale_input_image, 10, 2);
+    DisplayImage(output_image, "New York!");
 }
 
 
 void TestGaussianFilter()
 {
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = GaussianFilter(grayscale_input_image, 3, 3, 1.0);
+    DisplayImage(output_image, "New York!");
 }
 
 
 void LaplacianFilter()
 {
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = LaplacianFilter(grayscale_input_image);
+    DisplayImage(output_image, "New York!");
 }
 
 
