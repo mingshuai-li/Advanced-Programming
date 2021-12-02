@@ -16,6 +16,7 @@
 
 cv::Mat BrightnessTransform(const cv::Mat& input_image, const double& delta)
 {
+
     int image_height = input_image.rows;
     int image_width = input_image.cols;
     // Make a empty copy of the input image
@@ -42,6 +43,7 @@ cv::Mat BrightnessTransform(const cv::Mat& input_image, const double& delta)
 
 cv::Mat InverseTransform(const cv::Mat& input_image)
 {
+
     int image_height = input_image.rows;
     int image_width = input_image.cols;
     // Make a empty copy of the input image
@@ -59,6 +61,7 @@ cv::Mat InverseTransform(const cv::Mat& input_image)
 
 cv::Mat GammaTransform(const cv::Mat& input_image, const double& coefficient_a, const double& exponent_alpha)
 {
+
     int image_height = input_image.rows;
     int image_width = input_image.cols;
     // Make a empty copy of the input image
@@ -83,6 +86,7 @@ cv::Mat GammaTransform(const cv::Mat& input_image, const double& coefficient_a, 
 
 cv::Mat LogTransform(const cv::Mat& input_image, const double& coefficient_a)
 {
+
     int image_height = input_image.rows;
     int image_width = input_image.cols;
     // Make a empty copy of the input image
@@ -107,6 +111,7 @@ cv::Mat LogTransform(const cv::Mat& input_image, const double& coefficient_a)
 
 cv::Mat NormalizationTransform(const cv::Mat& input_image, const double& lower_threshold, const double& upper_threshold)
 {
+
     int image_height = input_image.rows;
     int image_width = input_image.cols;
     // Make a empty copy of the input image
@@ -139,6 +144,7 @@ cv::Mat NormalizationTransform(const cv::Mat& input_image, const double& lower_t
 
 cv::Mat ThresholdTransform(const cv::Mat& input_image, const double& threshold)
 {
+
     int image_height = input_image.rows;
     int image_width = input_image.cols;
     // Make a empty copy of the input image
@@ -157,6 +163,7 @@ cv::Mat ThresholdTransform(const cv::Mat& input_image, const double& threshold)
 
 cv::Mat WindowTransform(const cv::Mat& input_image, const double& lower_threshold, const double& upper_threshold)
 {
+
     int image_height = input_image.rows;
     int image_width = input_image.cols;
 
