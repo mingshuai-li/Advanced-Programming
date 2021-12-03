@@ -10,9 +10,6 @@
 **********************************************************************************/
 
 
-#include <iostream>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
 #include "image_io.hpp"
 #include "image_type_conversion.hpp"
 #include "image_enhancement.hpp"
