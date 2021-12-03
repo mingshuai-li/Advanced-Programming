@@ -77,7 +77,7 @@ cv::Mat LowPassFilter(const cv::Mat& input_image, const int& kernel_height, cons
     double kernel_coefficient = 1 / static_cast<double>(kernel_height * kernel_width);
     for (int i = 0; i < kernel_height; i++)
         for (int j = 0; j < kernel_width; j++)
-            kernel.at<double>(i, j) /= kernel_coefficient;
+            kernel.at<double>(i, j) *= kernel_coefficient;
     
     // Performs the convolution
     cv::Mat output_image = Convolve(input_image, kernel);
