@@ -31,6 +31,7 @@ int main(int argc, char** argv)
     int kernel_height = 0;
     int kernel_width = 0;
 
+    // Main menu
     std::cout << "Welcome to use this image processing system(Version 1.00)!\n";
     std::cout << "Which kind of operations would you like to perform?\n";
     std::cout << "1.Image Enhancement\n2.Image Geometric Transform\n3.Filtering\n";;
@@ -147,6 +148,7 @@ int main(int argc, char** argv)
     else
         std::cout << "ERROR:Wrong choice!\n";
 
+    // Displays the operated image
     DisplayImage(output_image, "New York!");
 
     return 0;
