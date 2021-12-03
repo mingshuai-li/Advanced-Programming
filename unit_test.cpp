@@ -83,7 +83,7 @@ void TestLogTransform()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = GLogTransform(input_image, 1.2);
+    cv::Mat output_image = LogTransform(input_image, 1.2);
     DisplayImage(output_image, "New York!");
 }
 
@@ -110,7 +110,7 @@ void TestWindowTransform()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = ThresholdTransform(input_image, 100, 150);
+    cv::Mat output_image = WindowTransform(input_image, 100, 150);
     DisplayImage(output_image, "New York!");
 }
 
@@ -128,7 +128,7 @@ void TestRotate()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = Resize(input_image, 45);
+    cv::Mat output_image = Rotate(input_image, 45);
     DisplayImage(output_image, "New York!");
 }
 
