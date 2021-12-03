@@ -63,51 +63,91 @@ void TestBrightnessTransform()
 
 void TestInverseTransform()
 {
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = InverseTransform(input_image);
+    DisplayImage(output_image, "New York!");
 }
 
 
 void TestGammaTransform()
 {
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = GammaTransform(input_image, 1, 0.4);
+    DisplayImage(output_image, "New York!");
 }
 
 
 void TestLogTransform()
 {
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = GLogTransform(input_image, 1.2);
+    DisplayImage(output_image, "New York!");
 }
 
 
 void TestNormalizationTransform()
 {
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = NormalizationTransform(input_image, 100, 150);
+    DisplayImage(output_image, "New York!");
 }
 
 
 void TestThresholdTransform()
 {
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = ThresholdTransform(input_image, 100);
+    DisplayImage(output_image, "New York!");
 }
 
 
 void TestWindowTransform()
 {
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = ThresholdTransform(input_image, 100, 150);
+    DisplayImage(output_image, "New York!");
 }
 
 
 void TestResize()
 {
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = Resize(input_image, 500, 500);
+    DisplayImage(output_image, "New York!");
 }
 
 
 void TestRotate()
 {
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = Resize(input_image, 45);
+    DisplayImage(output_image, "New York!");
 }
 
 
 void TestFlipLeftRight()
 {
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = FlipLeftRight(input_image);
+    DisplayImage(output_image, "New York!");
 }
 
 
 void TestFlipUpDown()
 {
+    cv::Mat input_image = ReadImage("NewYork.jpg");
+    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
+    cv::Mat output_image = FlipUpDown(input_image);
+    DisplayImage(output_image, "New York!");
 }
 
 
