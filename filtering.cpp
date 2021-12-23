@@ -145,7 +145,7 @@ cv::Mat HighPassFilter(const cv::Mat& input_image)
 cv::Mat BandPassFilter(const cv::Mat& input_image, double central_freq, double band_width)
 {
 
-    const nt image_height = input_image.rows;
+    const int image_height = input_image.rows;
     const int image_width = input_image.cols;
 
     cv::Mat input_image_double = ConvertUchar2DoubleC1(input_image); 
