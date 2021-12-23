@@ -38,7 +38,7 @@ cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel);
 * @ Return:
 *                       The output image
 */
-cv::Mat LowPassFilter(const cv::Mat& input_image, const int& kernel_height, const int& kernel_width);
+cv::Mat LowPassFilter(const cv::Mat& input_image, int kernel_height, int kernel_width);
 
 
 /*
@@ -67,7 +67,7 @@ cv::Mat HighPassFilter(const cv::Mat& input_image);
 * @ Return:
 *                       The output image
 */
-cv::Mat BandPassFilter(const cv::Mat& input_image, const double& central_freq, const double& band_width);
+cv::Mat BandPassFilter(const cv::Mat& input_image, double central_freq, double band_width);
 
 
 /*
@@ -80,7 +80,7 @@ cv::Mat BandPassFilter(const cv::Mat& input_image, const double& central_freq, c
 * @ Return:
 *                       The output image
 */
-cv::Mat GaussianFilter(const cv::Mat& input_image, const int& kernel_hiehght, const int& kernel_width, const double& kernel_sigma);
+cv::Mat GaussianFilter(const cv::Mat& input_image, int kernel_hieght, int kernel_width, double kernel_sigma);
 
 
 /*

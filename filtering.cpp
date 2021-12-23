@@ -17,12 +17,12 @@
 cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
 {
 
-    int image_height = input_image.rows;
-    int image_width = input_image.cols;
-    int kernel_height = kernel.rows;
-    int kernel_width = kernel.cols;
-    int half_kheight = kernel_height / 2;
-    int half_kwidth = kernel_width / 2;
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
+    const int kernel_height = kernel.rows;
+    const int kernel_width = kernel.cols;
+    const int half_kheight = kernel_height / 2;
+    const int half_kwidth = kernel_width / 2;
 
     // Pads the image so that the convolution computation won't met the edge problems
     cv::Mat padded_image = cv::Mat::zeros(image_height + 2 * half_kheight, image_width + 2 * half_kwidth, CV_8UC1);
@@ -33,8 +33,8 @@ cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
     
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
     // Computes the coefficients for the coordinates mapping in the convolution
-    int coefficient_h = (-2 * half_kheight) / (kernel_height - 1);
-    int coefficient_w = (-2 * half_kwidth) / (kernel_width - 1);
+    const int coefficient_h = (-2 * half_kheight) / (kernel_height - 1);
+    const int coefficient_w = (-2 * half_kwidth) / (kernel_width - 1);
     int padded_i = 0;
     int padded_j = 0;
     int transformed_i = 0;
@@ -68,7 +68,7 @@ cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
 }
 
 
-cv::Mat LowPassFilter(const cv::Mat& input_image, const int& kernel_height, const int& kernel_width)
+cv::Mat LowPassFilter(const cv::Mat& input_image, int kernel_height, int kernel_width)
 {
 
     cv::Mat kernel = cv::Mat::ones(kernel_height, kernel_width, CV_64FC1);
@@ -104,8 +104,8 @@ cv::Mat HighPassFilter(const cv::Mat& input_image)
     cv::Mat d_height = Convolve(input_image, kernel_height);
     cv::Mat d_width = Convolve(input_image, kernel_width);
 
-    int image_height = input_image.rows;
-    int image_width = input_image.cols;
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
 
     // Computes the gradient magnitudes at each pixel's position
     cv::Mat gradient_magnitude = cv::Mat::zeros(image_height, image_width, CV_64FC1);
@@ -131,8 +131,8 @@ cv::Mat HighPassFilter(const cv::Mat& input_image)
 
     // Maps the gradient values from [min_gradient, max_gradient] to [0, 255], the linear transform formula is as follows:
     // transformed values([0, 255]) = coefficient1 * values([min_gradient, max_gradient]) + coefficient2
-    double coefficient1 = 255.0 / (max_gradient - min_gradient);
-    double coefficient2 = (-min_gradient) * 255.0 / (max_gradient - min_gradient);
+    const double coefficient1 = 255.0 / (max_gradient - min_gradient);
+    const double coefficient2 = (-min_gradient) * 255.0 / (max_gradient - min_gradient);
     for (int i = 0; i < image_height; i++)
         for (int j = 0; j < image_width; j++)
             output_image.at<uchar>(i, j) = static_cast<uchar>(coefficient1 * gradient_magnitude.at<double>(i, j) + coefficient2);
@@ -142,11 +142,11 @@ cv::Mat HighPassFilter(const cv::Mat& input_image)
 }
 
 
-cv::Mat BandPassFilter(const cv::Mat& input_image, const double& central_freq, const double& band_width)
+cv::Mat BandPassFilter(const cv::Mat& input_image, double central_freq, double band_width)
 {
 
-    int image_height = input_image.rows;
-    int image_width = input_image.cols;
+    const nt image_height = input_image.rows;
+    const int image_width = input_image.cols;
 
     cv::Mat input_image_double = ConvertUchar2DoubleC1(input_image); 
 
@@ -155,8 +155,8 @@ cv::Mat BandPassFilter(const cv::Mat& input_image, const double& central_freq, c
     // Transforms the input image into the Fourier Domain
     cv::dft(input_image_double, frequency_domain_image);
 
-    int frequency_domain_height = frequency_domain_image.rows;
-    int frequency_domain_width = frequency_domain_image.cols;
+    const int frequency_domain_height = frequency_domain_image.rows;
+    const int frequency_domain_width = frequency_domain_image.cols;
 
     // Filters and keeps only the components that are aligned with the required frequencies
     for (int i = 0; i < frequency_domain_height; i++)
@@ -183,16 +183,16 @@ cv::Mat BandPassFilter(const cv::Mat& input_image, const double& central_freq, c
 }
 
 
-cv::Mat GaussianFilter(const cv::Mat& input_image, const int& kernel_height, const int& kernel_width, const double& kernel_sigma)
+cv::Mat GaussianFilter(const cv::Mat& input_image, int kernel_height, int kernel_width, double kernel_sigma)
 {
 
     cv::Mat kernel = cv::Mat::zeros(kernel_height, kernel_width, CV_64FC1);
 
-    int half_kheight = kernel_height / 2;
-    int half_kwidth = kernel_width / 2;
+    const int half_kheight = kernel_height / 2;
+    const int half_kwidth = kernel_width / 2;
     // The Gaussian filter formula: value = coefficient1 * e^((-(i - half_kheight)^2 - (j - half_kwidth)^2) * coefficient2)
-    double coefficient1 = 1 / (2 * PI * kernel_sigma * kernel_sigma);
-    double coefficient2 = 1 / (2 * kernel_sigma * kernel_sigma);
+    const double coefficient1 = 1 / (2 * PI * kernel_sigma * kernel_sigma);
+    const double coefficient2 = 1 / (2 * kernel_sigma * kernel_sigma);
     // Stores the sum of the Gaussian Kernel's values
     double sum = 0.0;
     // Stores the (i - half_kheight)^2 and the (j - half_kwidth)^2
