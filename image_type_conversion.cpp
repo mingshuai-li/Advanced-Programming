@@ -2,9 +2,9 @@
  
   * FileName:       image_type_conversion.cpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V1.00
-  * Date:           2021.11.29
-  * Description:    The implementation for some functions related to image-type conversion
+  * Version:        V2.00
+  * Date:           2021.12.23
+  * Description:    The implementation for the class ImageTypeConversion
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
@@ -13,7 +13,7 @@
 #include "image_type_conversion.hpp"
 
 
-cv::Mat ConvertRGB2GrayScale(const cv::Mat& input_image)
+cv::Mat ImageTypeConversion::ConvertRGB2GrayScale(const cv::Mat& input_image)
 {
 
     int image_height = input_image.rows;
@@ -45,7 +45,7 @@ cv::Mat ConvertRGB2GrayScale(const cv::Mat& input_image)
 }
 
 
-cv::Mat ConvertUchar2DoubleC1(const cv::Mat& input_image)
+cv::Mat ImageTypeConversion::ConvertUchar2DoubleC1(const cv::Mat& input_image)
 {
 
     int image_height = input_image.rows;
@@ -62,7 +62,7 @@ cv::Mat ConvertUchar2DoubleC1(const cv::Mat& input_image)
 }
 
 
-uchar MapDouble2Uchar(double n)
+uchar ImageTypeConversion::MapDouble2Uchar(double n)
 {
     return (n > 255.0) ? static_cast<uchar>(255) : ((n < 0.0) ? static_cast<uchar>(0) : static_cast<uchar>(n));
 }
