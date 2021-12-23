@@ -2,9 +2,9 @@
  
   * FileName:       unit_test.hpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V1.00
-  * Date:           2021.11.29
-  * Description:    The header file for the unit test functions 
+  * Version:        V2.00
+  * Date:           2021.12.23
+  * Description:    The header file for the class UnitTest
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
@@ -17,129 +17,116 @@
 #include "filtering.hpp"
 
 
-/*
-* Tests the ReadImage(), the DisplayImage() and the PrintImageInfo()
-*/
-void TestImageIO();
+class UnitTest
+{
 
+    public:
 
-/*
-* Tests the ConvertRGB2GrayScale()
-*/
-void TestConvertRGB2GrayScale();
+        /*
+        * Tests the ReadImage(), the DisplayImage() and the PrintImageInfo()
+        */
+        void TestImageIO();
 
+        /*
+        * Tests the ConvertRGB2GrayScale()
+        */
+        void TestConvertRGB2GrayScale();
 
-/*
-* Tests the ConvertUchar2DoubleC1()
-*/
-void TestConvertUchar2DoubleC1();
+        /*
+        * Tests the ConvertUchar2DoubleC1()
+        */
+        void TestConvertUchar2DoubleC1();
 
+        /*
+        * Tests MapDouble2Uchar()
+        */
+        void TestMapDouble2Uchar();
 
-/*
-* Tests MapDouble2Uchar()
-*/
-void TestMapDouble2Uchar();
+        /*
+        * Tests the BrightnessTransform()
+        */
+        void TestBrightnessTransform();
 
+        /*
+        * Tests the InverseTransform()
+        */
+        void TestInverseTransform();
 
-/*
-* Tests the BrightnessTransform()
-*/
-void TestBrightnessTransform();
+        /*
+        * Tests the GammaTransform()
+        */
+        void TestGammaTransform();
 
+        /*
+        * Tests the LogTransform()
+        */
+        void TestLogTransform();
 
-/*
-* Tests the InverseTransform()
-*/
-void TestInverseTransform();
+        /*
+        * Tests the NormalizationTransform()
+        */
+        void TestNormalizationTransform();
 
+        /*
+        * Tests the ThresholdTransform()
+        */
+        void TestThresholdTransform();
 
-/*
-* Tests the GammaTransform()
-*/
-void TestGammaTransform();
+        /*
+        * Tests the WindowTransform()
+        */
+        void TestWindowTransform();
 
+        /*
+        * Tests the Resize()
+        */
+        void TestResize();
 
-/*
-* Tests the LogTransform()
-*/
-void TestLogTransform();
+        /*
+        * Tests the Rotate()
+        */
+        void TestRotate();
 
+        /*
+        * Tests the FlipLeftRight()
+        */
+        void TestFlipLeftRight();
 
-/*
-* Tests the NormalizationTransform()
-*/
-void TestNormalizationTransform();
+        /*
+        * Tests the FlipUpDown()
+        */
+        void TestFlipUpDown();
 
+        /*
+        * Tests the Convolve()
+        */
+        void TestConvolve();
 
-/*
-* Tests the ThresholdTransform()
-*/
-void TestThresholdTransform();
+        /*
+        * Tests the LowPassFilter()
+        */
+        void TestLowPassFilter();
 
+        /*
+        * Tests the HighPassFilter()
+        */
+        void TestHighPassFilter();
 
-/*
-* Tests the WindowTransform()
-*/
-void TestWindowTransform();
+        /*
+        * Tests the BandPassFilter()
+        */
+        void TestBandPassFilter();
 
+        /*
+        * Tests the GaussianFilter()
+        */
+        void TestGaussianFilter();
 
-/*
-* Tests the Resize()
-*/
-void TestResize();
+        /*
+        * Tests the LaplacianFilter()
+        */
+        void LaplacianFilter();
 
-
-/*
-* Tests the Rotate()
-*/
-void TestRotate();
-
-
-/*
-* Tests the FlipLeftRight()
-*/
-void TestFlipLeftRight();
-
-
-/*
-* Tests the FlipUpDown()
-*/
-void TestFlipUpDown();
-
-
-/*
-* Tests the Convolve()
-*/
-void TestConvolve();
-
-
-/*
-* Tests the LowPassFilter()
-*/
-void TestLowPassFilter();
-
-
-/*
-* Tests the HighPassFilter()
-*/
-void TestHighPassFilter();
-
-
-/*
-* Tests the BandPassFilter()
-*/
-void TestBandPassFilter();
-
-
-/*
-* Tests the GaussianFilter()
-*/
-void TestGaussianFilter();
-
-
-/*
-* Tests the LaplacianFilter()
-*/
-void LaplacianFilter();
+};
 
 
