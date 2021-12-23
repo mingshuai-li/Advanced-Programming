@@ -2,9 +2,9 @@
  
   * FileName:       unit_test.cpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V1.00
-  * Date:           2021.11.29
-  * Description:    The implementation for the unit test functions
+  * Version:        V2.00
+  * Date:           2021.12.23
+  * Description:    The implementation for the class UnitClass
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
@@ -13,7 +13,7 @@
 #include "unit_test.hpp"
 
 
-void TestImageIO()
+void UnitTest::TestImageIO()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     DisplayImage(input_image, "New York!");
@@ -21,7 +21,7 @@ void TestImageIO()
 }
 
 
-void TestConvertRGB2GrayScale()
+void UnitTest::TestConvertRGB2GrayScale()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat output_image = ConvertRGB2GrayScale(input_image);
@@ -29,7 +29,7 @@ void TestConvertRGB2GrayScale()
 }
 
 
-void TestConvertUchar2DoubleC1()
+void UnitTest::TestConvertUchar2DoubleC1()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -39,7 +39,7 @@ void TestConvertUchar2DoubleC1()
 }
 
 
-void TestMapDouble2Uchar()
+void UnitTest::TestMapDouble2Uchar()
 {
     double n1 = 256.0;
     double n2 = 253.0;
@@ -52,7 +52,7 @@ void TestMapDouble2Uchar()
 }
 
 
-void TestBrightnessTransform()
+void UnitTest::TestBrightnessTransform()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -61,7 +61,7 @@ void TestBrightnessTransform()
 }
 
 
-void TestInverseTransform()
+void UnitTest::TestInverseTransform()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -70,7 +70,7 @@ void TestInverseTransform()
 }
 
 
-void TestGammaTransform()
+void UnitTest::TestGammaTransform()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -79,7 +79,7 @@ void TestGammaTransform()
 }
 
 
-void TestLogTransform()
+void UnitTest::TestLogTransform()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -88,7 +88,7 @@ void TestLogTransform()
 }
 
 
-void TestNormalizationTransform()
+void UnitTest::TestNormalizationTransform()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -97,7 +97,7 @@ void TestNormalizationTransform()
 }
 
 
-void TestThresholdTransform()
+void UnitTest::TestThresholdTransform()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -106,7 +106,7 @@ void TestThresholdTransform()
 }
 
 
-void TestWindowTransform()
+void UnitTest::TestWindowTransform()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -115,7 +115,7 @@ void TestWindowTransform()
 }
 
 
-void TestResize()
+void UnitTest::TestResize()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -124,7 +124,7 @@ void TestResize()
 }
 
 
-void TestRotate()
+void UnitTest::TestRotate()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -133,7 +133,7 @@ void TestRotate()
 }
 
 
-void TestFlipLeftRight()
+void UnitTest::TestFlipLeftRight()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -142,7 +142,7 @@ void TestFlipLeftRight()
 }
 
 
-void TestFlipUpDown()
+void UnitTest::TestFlipUpDown()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -151,7 +151,7 @@ void TestFlipUpDown()
 }
 
 
-void TestConvolve()
+void UnitTest::TestConvolve()
 {
     cv::Mat kernel = cv::Mat::ones(3, 3, CV_64FC1);
     for (int i = 0; i < 3; i++)
@@ -164,7 +164,7 @@ void TestConvolve()
 }
 
 
-void TestLowPassFilter()
+void UnitTest::TestLowPassFilter()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -173,7 +173,7 @@ void TestLowPassFilter()
 }
 
 
-void TestHighPassFilter()
+void UnitTest::TestHighPassFilter()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -182,7 +182,7 @@ void TestHighPassFilter()
 }
 
 
-void TestBandPassFilter()
+void UnitTest::TestBandPassFilter()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -191,7 +191,7 @@ void TestBandPassFilter()
 }
 
 
-void TestGaussianFilter()
+void UnitTest::TestGaussianFilter()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
@@ -200,7 +200,7 @@ void TestGaussianFilter()
 }
 
 
-void LaplacianFilter()
+void UnitTest::LaplacianFilter()
 {
     cv::Mat input_image = ReadImage("NewYork.jpg");
     cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
