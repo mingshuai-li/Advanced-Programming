@@ -2,9 +2,9 @@
  
   * FileName:       filtering.hpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V1.00
-  * Date:           2021.11.29
-  * Description:    The header file for the filtering algorithms
+  * Version:        V2.00
+  * Date:           2021.12.23
+  * Description:    The header file for the class Filtering
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
@@ -14,14 +14,14 @@
 #include <opencv2/core/core.hpp>
 
 
-#define PI 3.141592654
-#define NATURAL_CONSTANT 2.7182818284
-
 class Filtering
 {
 
-    public:
+    private:
+        static const double PI_;
+        static const double NATURAL_CONSTANT_;
 
+    public:
         /*
         * Performs the convolution utilizing the input image and the kernel
         * @ Parameter:
@@ -99,6 +99,5 @@ class Filtering
         cv::Mat LaplacianFilter(const cv::Mat& input_image);
 
 };
-
 
 
