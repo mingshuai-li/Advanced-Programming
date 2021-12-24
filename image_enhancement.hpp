@@ -17,7 +17,6 @@
 class ImageEnhancement
 {
     public:
-
         /*
         * Changes each pixel's values by a constant value
         * @ Parameter:
