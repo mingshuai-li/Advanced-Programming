@@ -2,9 +2,9 @@
  
   * FileName:       geometric_transform.hpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V1.00
-  * Date:           2021.11.29
-  * Description:    The header file for the geometric transform algorithms
+  * Version:        V2.00
+  * Date:           2021.12.23
+  * Description:    The header file for the class GeometricTransform
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
@@ -14,12 +14,13 @@
 #include <opencv2/core/core.hpp>
 
 
-#define PI 3.141592654
-
 class GeometricTransform
 {
-    public:
 
+    private:
+        static const double PI_;
+
+    public:
         /*
         * Resizes the image to the given scale
         * @ Parameter:
@@ -28,7 +29,7 @@ class GeometricTransform
         *       width_scaling:  The scaling factor alongside the width of the output image
         *       output_image:   The output image reference
         */
-        cv::Mat Resize(const cv::Mat& input_image, const double& height_scaling, const double& width_scaling);
+        cv::Mat Resize(const cv::Mat& input_image, double height_scaling, double width_scaling);
 
 
         /*
@@ -38,7 +39,7 @@ class GeometricTransform
         *       angle:          The angle that the input image rotates
         *       output_image:   The output image reference
         */
-        cv::Mat Rotate(const cv::Mat& input_image, const double& angle);
+        cv::Mat Rotate(const cv::Mat& input_image, double angle);
 
 
         /*
@@ -59,4 +60,5 @@ class GeometricTransform
         cv::Mat FlipUpDown(const cv::Mat& input_image);
 
 };
+
 
