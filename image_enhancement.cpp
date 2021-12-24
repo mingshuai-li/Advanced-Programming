@@ -4,7 +4,7 @@
   * Author:         Zichen Zhang, Mingshuai Li
   * Version:        V2.00
   * Date:           2021.12.23
-  * Description:    The implementation for
+  * Description:    The implementation for the class ImageEnhancement
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
@@ -17,8 +17,9 @@
 cv::Mat ImageEnhancement::BrightnessTransform(const cv::Mat& input_image, double delta)
 {
 
-    int image_height = input_image.rows;
-    int image_width = input_image.cols;
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
+
     // Make a empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
 
@@ -43,8 +44,8 @@ cv::Mat ImageEnhancement::BrightnessTransform(const cv::Mat& input_image, double
 cv::Mat ImageEnhancement::InverseTransform(const cv::Mat& input_image)
 {
 
-    int image_height = input_image.rows;
-    int image_width = input_image.cols;
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
 
     // Make a empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
@@ -62,8 +63,9 @@ cv::Mat ImageEnhancement::InverseTransform(const cv::Mat& input_image)
 cv::Mat ImageEnhancement::GammaTransform(const cv::Mat& input_image, double coefficient_a, double exponent_alpha)
 {
 
-    int image_height = input_image.rows;
-    int image_width = input_image.cols;
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
+
     // Make a empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
 
@@ -87,8 +89,9 @@ cv::Mat ImageEnhancement::GammaTransform(const cv::Mat& input_image, double coef
 cv::Mat ImageEnhancement::LogTransform(const cv::Mat& input_image, double coefficient_a)
 {
 
-    int image_height = input_image.rows;
-    int image_width = input_image.cols;
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
+
     // Make a empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
 
@@ -112,8 +115,9 @@ cv::Mat ImageEnhancement::LogTransform(const cv::Mat& input_image, double coeffi
 cv::Mat ImageEnhancement::NormalizationTransform(const cv::Mat& input_image, double lower_threshold, double upper_threshold)
 {
 
-    int image_height = input_image.rows;
-    int image_width = input_image.cols;
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
+
     // Make a empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
     // Judge the value of lower_threshold and upper_threshold
@@ -121,8 +125,8 @@ cv::Mat ImageEnhancement::NormalizationTransform(const cv::Mat& input_image, dou
         std::cout << "ERROR: a should be <= b\n";
     else
     {
-        double k = 255.0 / (upper_threshold - lower_threshold);
-        double b = 255.0 * lower_threshold / (lower_threshold - upper_threshold);
+        const double k = 255.0 / (upper_threshold - lower_threshold);
+        const double b = 255.0 * lower_threshold / (lower_threshold - upper_threshold);
         // Loop over all pixels' intensities
         for (int i = 0; i < image_height; i++)
         {
@@ -145,8 +149,9 @@ cv::Mat ImageEnhancement::NormalizationTransform(const cv::Mat& input_image, dou
 cv::Mat ImageEnhancement::ThresholdTransform(const cv::Mat& input_image, double threshold)
 {
 
-    int image_height = input_image.rows;
-    int image_width = input_image.cols;
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
+
     // Make a empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
     // Loop over all pixels' intensities
@@ -164,8 +169,8 @@ cv::Mat ImageEnhancement::ThresholdTransform(const cv::Mat& input_image, double 
 cv::Mat ImageEnhancement::WindowTransform(const cv::Mat& input_image, double lower_threshold, double upper_threshold)
 {
 
-    int image_height = input_image.rows;
-    int image_width = input_image.cols;
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
 
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
     // Make a empty copy of the input image
