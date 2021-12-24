@@ -13,7 +13,7 @@
 #include "geometric_transform.hpp"
 
 
-cv::Mat Resize(const cv::Mat& input_image, const double& height_scaling, const double& width_scaling)
+cv::Mat GeometricTransform::Resize(const cv::Mat& input_image, const double& height_scaling, const double& width_scaling)
 {  
 
     int rows = cvRound(input_image.rows * height_scaling);
@@ -39,7 +39,7 @@ cv::Mat Resize(const cv::Mat& input_image, const double& height_scaling, const d
 }
 
 
-cv::Mat Rotate(const cv::Mat& input_image, const double& angle)
+cv::Mat GeometricTransform::Rotate(const cv::Mat& input_image, const double& angle)
 {
 
     int image_height = input_image.rows;
@@ -82,7 +82,7 @@ cv::Mat Rotate(const cv::Mat& input_image, const double& angle)
 }
 
 
-cv::Mat FlipLeftRight(const cv::Mat& input_image)
+cv::Mat GeometricTransform::FlipLeftRight(const cv::Mat& input_image)
 {
 
     int image_height = input_image.rows;
@@ -100,7 +100,7 @@ cv::Mat FlipLeftRight(const cv::Mat& input_image)
 }
 
 
-cv::Mat FlipUpDown(const cv::Mat& input_image)
+cv::Mat GeometricTransform::FlipUpDown(const cv::Mat& input_image)
 {
 
     int image_height = input_image.rows;

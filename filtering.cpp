@@ -14,7 +14,7 @@
 #include "image_type_conversion.hpp"
 
 
-cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
+cv::Mat Filtering::Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
 {
 
     const int image_height = input_image.rows;
@@ -58,7 +58,7 @@ cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
                     weighted_sum += padded_image.at<uchar>(transformed_i, transformed_j) * kernel.at<double>(k, l);
                 }
             }
-            weighted_sum = MapDouble2Uchar(weighted_sum);
+            weighted_sum = ImageTypeConversion::MapDouble2Uchar(weighted_sum);
             output_image.at<uchar>(i, j) = weighted_sum;
         }
     }
@@ -68,7 +68,7 @@ cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
 }
 
 
-cv::Mat LowPassFilter(const cv::Mat& input_image, int kernel_height, int kernel_width)
+cv::Mat Filtering::LowPassFilter(const cv::Mat& input_image, int kernel_height, int kernel_width)
 {
 
     cv::Mat kernel = cv::Mat::ones(kernel_height, kernel_width, CV_64FC1);
@@ -87,7 +87,7 @@ cv::Mat LowPassFilter(const cv::Mat& input_image, int kernel_height, int kernel_
 }
 
 
-cv::Mat HighPassFilter(const cv::Mat& input_image)
+cv::Mat Filtering::HighPassFilter(const cv::Mat& input_image)
 {
 
     // Computes the kernel for computing the image's gradients in the height direction
@@ -142,13 +142,13 @@ cv::Mat HighPassFilter(const cv::Mat& input_image)
 }
 
 
-cv::Mat BandPassFilter(const cv::Mat& input_image, double central_freq, double band_width)
+cv::Mat Filtering::BandPassFilter(const cv::Mat& input_image, double central_freq, double band_width)
 {
 
     const int image_height = input_image.rows;
     const int image_width = input_image.cols;
 
-    cv::Mat input_image_double = ConvertUchar2DoubleC1(input_image); 
+    cv::Mat input_image_double =  ImageTypeConversion::ConvertUchar2DoubleC1(input_image); 
 
     cv::Mat frequency_domain_image = cv::Mat::zeros(image_height, image_width, CV_64FC1);
 
@@ -183,7 +183,7 @@ cv::Mat BandPassFilter(const cv::Mat& input_image, double central_freq, double b
 }
 
 
-cv::Mat GaussianFilter(const cv::Mat& input_image, int kernel_height, int kernel_width, double kernel_sigma)
+cv::Mat Filtering::GaussianFilter(const cv::Mat& input_image, int kernel_height, int kernel_width, double kernel_sigma)
 {
 
     cv::Mat kernel = cv::Mat::zeros(kernel_height, kernel_width, CV_64FC1);
@@ -225,7 +225,7 @@ cv::Mat GaussianFilter(const cv::Mat& input_image, int kernel_height, int kernel
 }
 
 
-cv::Mat LaplacianFilter(const cv::Mat& input_image)
+cv::Mat Filtering::LaplacianFilter(const cv::Mat& input_image)
 {
 
     // Computes the Laplacian Kernel
