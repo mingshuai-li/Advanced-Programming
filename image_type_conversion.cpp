@@ -16,13 +16,13 @@
 cv::Mat ImageTypeConversion::ConvertRGB2GrayScale(const cv::Mat& input_image)
 {
 
-    int image_height = input_image.rows;
-    int image_width = input_image.cols;
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
 
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
 
     // The weights utilized to map the RGB channels to the grayscale channel
-    double weights[3] = {0.0722, 0.7152, 0.2126};
+    const double weights[3] = {0.0722, 0.7152, 0.2126};
     double weighted_sum = 0.0;
 
     for (int i = 0; i < image_height; i++)
@@ -48,8 +48,8 @@ cv::Mat ImageTypeConversion::ConvertRGB2GrayScale(const cv::Mat& input_image)
 cv::Mat ImageTypeConversion::ConvertUchar2DoubleC1(const cv::Mat& input_image)
 {
 
-    int image_height = input_image.rows;
-    int image_width = input_image.cols;
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
 
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_64FC1);
 
