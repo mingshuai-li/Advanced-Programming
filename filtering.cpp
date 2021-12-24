@@ -2,9 +2,9 @@
  
   * FileName:       filtering.cpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V1.00
-  * Date:           2021.11.29
-  * Description:    The implementation for the filtering algorithms
+  * Version:        V2.00
+  * Date:           2021.12.23
+  * Description:    The implementation for the class Filtering
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
@@ -12,6 +12,10 @@
 
 #include "filtering.hpp"
 #include "image_type_conversion.hpp"
+
+
+const double Filtering::PI_ = 3.141592654;
+const double Filtering::NATURAL_CONSTANT_ = 2.7182818284;
 
 
 cv::Mat Filtering::Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
@@ -74,7 +78,7 @@ cv::Mat Filtering::LowPassFilter(const cv::Mat& input_image, int kernel_height, 
     cv::Mat kernel = cv::Mat::ones(kernel_height, kernel_width, CV_64FC1);
 
     // Computes the uniform kernel
-    double kernel_coefficient = 1 / static_cast<double>(kernel_height * kernel_width);
+    const double kernel_coefficient = 1 / static_cast<double>(kernel_height * kernel_width);
     for (int i = 0; i < kernel_height; i++)
         for (int j = 0; j < kernel_width; j++)
             kernel.at<double>(i, j) *= kernel_coefficient;
@@ -191,7 +195,7 @@ cv::Mat Filtering::GaussianFilter(const cv::Mat& input_image, int kernel_height,
     const int half_kheight = kernel_height / 2;
     const int half_kwidth = kernel_width / 2;
     // The Gaussian filter formula: value = coefficient1 * e^((-(i - half_kheight)^2 - (j - half_kwidth)^2) * coefficient2)
-    const double coefficient1 = 1 / (2 * PI * kernel_sigma * kernel_sigma);
+    const double coefficient1 = 1 / (2 * Filtering::PI_ * kernel_sigma * kernel_sigma);
     const double coefficient2 = 1 / (2 * kernel_sigma * kernel_sigma);
     // Stores the sum of the Gaussian Kernel's values
     double sum = 0.0;
@@ -207,7 +211,7 @@ cv::Mat Filtering::GaussianFilter(const cv::Mat& input_image, int kernel_height,
         for (int j = 0; j < kernel_width; j++)
         {
             offset_j = pow(j - half_kwidth, 2);
-            current_kernel_value = coefficient1 * pow(NATURAL_CONSTANT, (-offset_i - offset_j) * coefficient2);
+            current_kernel_value = coefficient1 * pow(Filtering::NATURAL_CONSTANT_, (-offset_i - offset_j) * coefficient2);
             kernel.at<double>(i, j) = current_kernel_value;
             sum += current_kernel_value;
         }
