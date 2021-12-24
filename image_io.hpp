@@ -18,7 +18,6 @@
 class ImageIO
 {
     public:
-
         /*
         * Reads the image and returns the corresponding data structure
         * @ Parameter:
@@ -26,7 +25,7 @@ class ImageIO
         * @ Return:
         *                  The image that is read in
         */
-        cv::Mat ReadImage(const std::string& filw_name);
+        cv::Mat ReadImage(const std::string& file_name);
 
 
         /*
