@@ -17,7 +17,6 @@
 class ImageTypeConversion
 {
     public:
-
         /*
         * Converts the RGB image to the gray scale image
         * @ Parameter:
