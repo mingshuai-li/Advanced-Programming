@@ -20,6 +20,7 @@
 
 class ImageProcessingSystem
 {
+
     private:
         ImageIO* image_io_;
         ImageEnhancement* image_enhancement_;
@@ -42,6 +43,23 @@ class ImageProcessingSystem
         * Runs the filtering section of the system
         */
         void RunFiltering();
+
+        /*
+        * Updates the input_image_ using the current output_image_
+        */
+        void UpdateInputImage();
+
+        /*
+        * Updates the input_image_ using the image file
+        * @ Parameter:
+        *       file_name:    The file name of the new input image
+        */
+        void UpdateInputImage(const std::string& file_name);
+
+        /*
+        * Runs the update input image section of the system
+        */
+        void RunUpdateInputImage();
     
     public:
         /*
@@ -50,6 +68,13 @@ class ImageProcessingSystem
         *       file_name:    The file name of the input image
         */
         ImageProcessingSystem(const std::string& file_name);
+
+        /*
+        * The copy constructor
+        * @ Parameter:
+        *       image_processing_system:    The image processing system object that is going to be copied
+        */
+        ImageProcessingSystem(const ImageProcessingSystem& image_processing_system);
 
         /*
         * The destructor
