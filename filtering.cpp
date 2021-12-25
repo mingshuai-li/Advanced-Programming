@@ -36,6 +36,7 @@ cv::Mat Filtering::Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
             padded_image.at<uchar>(i + half_kheight, j + half_kwidth) = input_image.at<uchar>(i, j);
     
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
+
     // Computes the coefficients for the coordinates mapping in the convolution
     const int coefficient_h = (-2 * half_kheight) / (kernel_height - 1);
     const int coefficient_w = (-2 * half_kwidth) / (kernel_width - 1);
@@ -194,11 +195,14 @@ cv::Mat Filtering::GaussianFilter(const cv::Mat& input_image, int kernel_height,
 
     const int half_kheight = kernel_height / 2;
     const int half_kwidth = kernel_width / 2;
+
     // The Gaussian filter formula: value = coefficient1 * e^((-(i - half_kheight)^2 - (j - half_kwidth)^2) * coefficient2)
     const double coefficient1 = 1 / (2 * Filtering::PI_ * kernel_sigma * kernel_sigma);
     const double coefficient2 = 1 / (2 * kernel_sigma * kernel_sigma);
+
     // Stores the sum of the Gaussian Kernel's values
     double sum = 0.0;
+
     // Stores the (i - half_kheight)^2 and the (j - half_kwidth)^2
     double offset_i = 0.0;
     double offset_j = 0.0;
