@@ -15,11 +15,12 @@
 
 int Menu::MainMenu()
 {
+
     int choice = 0;
 
-    std::cout << "Welcome to use this image processing system(Version 1.00)!\n";
+    std::cout << "Welcome to use this image processing system(Version 2.00)!\n";
     std::cout << "Which kind of operations would you like to perform?\n";
-    std::cout << "1.Image Enhancement\n2.Image Geometric Transform\n3.Filtering\n";;
+    std::cout << "1.Image Enhancement\n2.Image Geometric Transform\n3.Filtering\n4.Update Input Image\n5.Quit\n";;
     std::cin >> choice;
 
     return choice;
@@ -29,6 +30,7 @@ int Menu::MainMenu()
 
 int Menu::ImageEnhancementMenu()
 {
+
     int choice = 0;
 
     std::cout << "Which kind of Image Enhancement operations would you like to perform?\n";
@@ -43,6 +45,7 @@ int Menu::ImageEnhancementMenu()
 
 int Menu::GeometricTransformMenu()
 {
+
     int choice = 0;
 
     std::cout << "Which kind of Image Geometric Transform operations would you like to perform?\n";
@@ -56,10 +59,25 @@ int Menu::GeometricTransformMenu()
 
 int Menu::FilteringMenu()
 {
+
     int choice = 0;
 
     std::cout << "Which kind of Filtering operations would you like to perform?\n";
     std::cout << "1.Low Pass Filtering\n2.High Pass Filtering\n3.Band Pass Filtering\n4.Gaussian Filtering\n5.Laplacian Filtering\n";
+    std::cin >> choice;
+
+    return choice;
+
+}
+
+
+int Menu::UpdateInputImageMenu()
+{
+
+    int choice = 0;
+
+    std::cout << "Which option of input image update would you likw to perform?\n";
+    std::cout << "1.Using the current output image\n2.Using a new input image\n";
     std::cin >> choice;
 
     return choice;
