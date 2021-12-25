@@ -13,43 +13,6 @@
 #include "image_processing_system.hpp"
 
 
-ImageProcessingSystem::ImageProcessingSystem(const std::string& file_name)
-{
-
-    image_io_ = new ImageIO();
-    image_enhancement_ = new ImageEnhancement();
-    geometric_transform_ = new GeometricTransform();
-    filtering_ = new Filtering();
-    menu_ = new Menu();
-
-    input_image_ = image_io_->ReadImage(file_name);
-    input_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
-    output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
-
-}
-
-
-ImageProcessingSystem::~ImageProcessingSystem()
-{
-
-    delete image_io_;
-    image_io_ = nullptr;
-
-    delete image_enhancement_;
-    image_enhancement_ = nullptr;
-
-    delete geometric_transform_;
-    geometric_transform_ = nullptr;
-
-    delete filtering_;
-    filtering_ = nullptr;
-
-    delete menu_;
-    menu_ = nullptr;
-
-}
-
-
 void ImageProcessingSystem::RunImageEnhancement()
 {
 
@@ -170,21 +133,111 @@ void ImageProcessingSystem::RunFiltering()
 }
 
 
+void ImageProcessingSystem::UpdateInputImage()
+{
+    input_image_ = output_image_.clone();
+}
+
+
+void ImageProcessingSystem::UpdateInputImage(const std::string& file_name)
+{
+    input_image_ = image_io_->ReadImage(file_name);
+    input_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+}
+
+
+void ImageProcessingSystem::RunUpdateInputImage()
+{
+
+    int choice = menu_->UpdateInputImageMenu();
+
+    if (choice == 1)
+        UpdateInputImage();
+    else if (choice == 2)
+    {
+        std::string file_name = "";
+        std::cout << "Please enter the file name of the new input image: ";
+        std::cin >> file_name;
+        UpdateInputImage(file_name);
+    }
+    else
+        std::cout << "ERROR:Wrong choice!\n";
+
+}
+
+
+ImageProcessingSystem::ImageProcessingSystem(const std::string& file_name)
+{
+
+    image_io_ = new ImageIO();
+    image_enhancement_ = new ImageEnhancement();
+    geometric_transform_ = new GeometricTransform();
+    filtering_ = new Filtering();
+    menu_ = new Menu();
+
+    input_image_ = image_io_->ReadImage(file_name);
+    input_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
+
+}
+
+
+ImageProcessingSystem::ImageProcessingSystem(const ImageProcessingSystem& image_processing_system)
+{
+    image_io_ = new ImageIO();
+    image_enhancement_ = new ImageEnhancement();
+    geometric_transform_ = new GeometricTransform();
+    filtering_ = new Filtering();
+    menu_ = new Menu();
+
+    input_image_ = image_processing_system.input_image_.clone();
+    output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
+}
+
+
+ImageProcessingSystem::~ImageProcessingSystem()
+{
+
+    delete image_io_;
+    image_io_ = nullptr;
+
+    delete image_enhancement_;
+    image_enhancement_ = nullptr;
+
+    delete geometric_transform_;
+    geometric_transform_ = nullptr;
+
+    delete filtering_;
+    filtering_ = nullptr;
+
+    delete menu_;
+    menu_ = nullptr;
+
+}
+
+
 cv::Mat ImageProcessingSystem::Run()
 {
 
     int choice = 0;
 
-    choice = menu_->MainMenu();
+    while (true)
+    {
+        choice = menu_->MainMenu();
 
-    if (choice == 1)
-        RunImageEnhancement();
-    else if (choice == 2)
-        RunGeometricTransform();
-    else if (choice == 3)
-        RunFiltering();
-    else
-        std::cout << "ERROR:Wrong choice!\n";
+        if (choice == 1)
+            RunImageEnhancement();
+        else if (choice == 2)
+            RunGeometricTransform();
+        else if (choice == 3)
+            RunFiltering();
+        else if (choice == 4)
+            RunUpdateInputImage();
+        else if (choice == 5)
+            break;
+        else
+            std::cout << "ERROR:Wrong choice!\n";
+    }
 
     image_io_->DisplayImage(output_image_, "New York!");
 
