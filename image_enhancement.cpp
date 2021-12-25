@@ -20,19 +20,19 @@ cv::Mat ImageEnhancement::BrightnessTransform(const cv::Mat& input_image, double
     const int image_height = input_image.rows;
     const int image_width = input_image.cols;
 
-    // Make a empty copy of the input image
+    // Makes an empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
 
     double new_value = 0.0;
 
-    // Loop over all pixel values 
+    // Loops over all pixels' values 
     for (int i = 0; i < image_height; i++)
     {
         for (int j = 0; j < image_width; j++)
         {
             new_value = static_cast<double>(input_image.at<uchar>(i, j)) + delta;
             output_image.at<uchar>(i, j) = ImageTypeConversion::MapDouble2Uchar(new_value);
-            // The point process is addition with a constant
+            // Adds a constant to each pixel's value
         }
     }
 
@@ -47,13 +47,14 @@ cv::Mat ImageEnhancement::InverseTransform(const cv::Mat& input_image)
     const int image_height = input_image.rows;
     const int image_width = input_image.cols;
 
-    // Make a empty copy of the input image
+    // Makes an empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
-    // Loop over all pixels' intensities
+
+    // Loops over all pixels' intensities
     for (int i = 0; i < image_height; i++)
         for (int j = 0; j < image_width; j++)
             output_image.at<uchar>(i, j) = 255 - input_image.at<uchar>(i, j);
-            // The point process is be substracted from the 255 to inverse the pixel value
+            // Each pixel's value is subtracted by 255
 
     return output_image;
 
@@ -66,11 +67,11 @@ cv::Mat ImageEnhancement::GammaTransform(const cv::Mat& input_image, double coef
     const int image_height = input_image.rows;
     const int image_width = input_image.cols;
 
-    // Make a empty copy of the input image
+    // Makes an empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
 
     double new_value = 0.0;
-    // Loop over all pixels' intensities
+    // Loops over all pixels' intensities
     for (int i = 0; i < image_height; i++)
     {
         for (int j = 0; j < image_width; j++)
@@ -92,11 +93,11 @@ cv::Mat ImageEnhancement::LogTransform(const cv::Mat& input_image, double coeffi
     const int image_height = input_image.rows;
     const int image_width = input_image.cols;
 
-    // Make a empty copy of the input image
+    // Makes an empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
 
     double new_value = 0.0;
-    // Loop over all pixels' intensities
+    // Loops over all pixels' intensities
     for (int i = 0; i < image_height; i++)
     {
         for (int j = 0; j < image_width; j++)
@@ -118,16 +119,16 @@ cv::Mat ImageEnhancement::NormalizationTransform(const cv::Mat& input_image, dou
     const int image_height = input_image.rows;
     const int image_width = input_image.cols;
 
-    // Make a empty copy of the input image
+    // Makes an empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
-    // Judge the value of lower_threshold and upper_threshold
+    // Judges whether the values of lower_threshold and upper_threshold are reasonable
     if (lower_threshold > upper_threshold)
         std::cout << "ERROR: a should be <= b\n";
     else
     {
         const double k = 255.0 / (upper_threshold - lower_threshold);
         const double b = 255.0 * lower_threshold / (lower_threshold - upper_threshold);
-        // Loop over all pixels' intensities
+        // Loops over all pixels' intensities
         for (int i = 0; i < image_height; i++)
         {
             for (int j = 0; j < image_width; j++)
@@ -136,7 +137,7 @@ cv::Mat ImageEnhancement::NormalizationTransform(const cv::Mat& input_image, dou
                     output_image.at<uchar>(i, j) = static_cast<uchar>(255);
                 else if (static_cast<double>(input_image.at<uchar>(i, j)) >= lower_threshold)
                     output_image.at<uchar>(i, j) = static_cast<uchar>(k * input_image.at<uchar>(i, j) + b);
-                // We modify the intensity values of pixels to make the image more appealing to the senses
+                // Modifies the intensity values of pixels to make the image more appealing to the senses
             }
         }
     }
@@ -152,9 +153,9 @@ cv::Mat ImageEnhancement::ThresholdTransform(const cv::Mat& input_image, double 
     const int image_height = input_image.rows;
     const int image_width = input_image.cols;
 
-    // Make a empty copy of the input image
+    // Makes an empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
-    // Loop over all pixels' intensities
+    // Loops over all pixels' intensities
     for (int i = 0; i < image_height; i++)
         for (int j = 0; j < image_width; j++)
             if (static_cast<double>(input_image.at<uchar>(i, j)) >= threshold)
@@ -173,17 +174,17 @@ cv::Mat ImageEnhancement::WindowTransform(const cv::Mat& input_image, double low
     const int image_width = input_image.cols;
 
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
-    // Make a empty copy of the input image
+    // Makes an empty copy of the input image
     if (lower_threshold > upper_threshold)
         std::cout << "ERROR: a should be <= b\n";
     else
     {
-        // Loop over all pixels' intensities
+        // Loops over all pixels' intensities
         for (int i = 0; i < image_height; i++)
             for (int j = 0; j < image_width; j++)
                 if ((static_cast<double>(input_image.at<uchar>(i, j)) >= lower_threshold) && (static_cast<double>(input_image.at<uchar>(i, j)) <= upper_threshold))
                     output_image.at<uchar>(i, j) = input_image.at<uchar>(i, j);
-                // Only remain the values between the range given by Users
+                // Keeps the pixels' values between the range defined by lower_threshold and upper_threshold, sets others to zero
     }
 
     return output_image;
