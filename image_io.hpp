@@ -17,6 +17,7 @@
 
 class ImageIO
 {
+
     public:
         /*
         * Reads the image and returns the corresponding data structure
