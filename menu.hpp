@@ -15,6 +15,7 @@
 
 class Menu
 {
+
     public:
         /*
         * Displays the main menu
@@ -43,6 +44,13 @@ class Menu
         *                       The users' choice
         */
         int FilteringMenu();
+
+        /*
+        * Displays the update input image section menu
+        * @ Return:
+        *                       The users' choice
+        */
+        int UpdateInputImageMenu();
 
 };
 
