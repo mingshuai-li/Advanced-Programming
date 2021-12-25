@@ -16,6 +16,7 @@
 
 class ImageEnhancement
 {
+
     public:
         /*
         * Changes each pixel's values by a constant value
@@ -61,13 +62,13 @@ class ImageEnhancement
 
         /*
         * Applies the normalization transform to the image, the formula is as follows.
-        * if the pixel's intensities < a:
-        *     the corresponding pixel's intensities of the output image = 0
-        * if the pixel's intensities is between a and b:
-        *     the corresponding pixel's intensities of the output image = k * pixel's intensities + b0,
+        * If the pixel's intensities < a:
+        *     The corresponding pixel's intensities of the output image = 0
+        * If the pixel's intensities is between a and b:
+        *     The corresponding pixel's intensities of the output image = k * pixel's intensities + b0,
         *     where k = 255 / (b - a), b0 = 255 * a / (a - b)
-        * if the pixel's intensities > b:
-        *     the corresponding pixel's intensities of the output image = 255
+        * If the pixel's intensities > b:
+        *     The corresponding pixel's intensities of the output image = 255
         * @ Parameter:
         *       input_image:      The input image reference
         *       lower_threshold:  The lower threshold
@@ -79,10 +80,10 @@ class ImageEnhancement
 
         /*
         * Applies the threshold transform to the image, the formula is as follows.
-        * if the pixel's intensities < a:
-        *     the corresponding pixel's intensities of the output image = 0
-        * else:
-        *     the corresponding pixel's intensities of the output image = pixel's intensities
+        * If the pixel's intensities < a:
+        *     The corresponding pixel's intensities of the output image = 0
+        * Else:
+        *     The corresponding pixel's intensities of the output image = pixel's intensities
         * @ Parameter:
         *       input_image:    The input image reference
         *       threshold:      The threshold
@@ -93,12 +94,12 @@ class ImageEnhancement
 
         /*
         * Applies the window transform to the image, the formula is as follows.
-        * if the pixel's intensities < a:
-        *     the corresponding pixel's intensities of the output image = 0
-        * if the pixel's intensities is between a and b:
-        *     the corresponding pixel's intensities of the output image = pixel's intensities
-        * if the pixel's intensities > b:
-        *     the corresponding pixel's intensities of the output image = 0
+        * If the pixel's intensities < a:
+        *     The corresponding pixel's intensities of the output image = 0
+        * If the pixel's intensities is between a and b:
+        *     The corresponding pixel's intensities of the output image = pixel's intensities
+        * If the pixel's intensities > b:
+        *     The corresponding pixel's intensities of the output image = 0
         * @ Parameter:
         *       input_image:      The input image reference
         *       lower_threshold:  The lower threshold
