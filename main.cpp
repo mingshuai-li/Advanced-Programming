@@ -16,7 +16,7 @@
 int main(int argc, char** argv)
 {
 
-    ImageProcessingSystem* image_processing_system = new ImageProcessingSystem("NewYork.jpg");
+    std::unique_ptr<ImageProcessingSystem> image_processing_system = std::make_unique<ImageProcessingSystem>("NewYork.jpg");
 
     cv::Mat output_image = image_processing_system->Run();
 
