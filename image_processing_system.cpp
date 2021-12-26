@@ -166,14 +166,26 @@ void ImageProcessingSystem::RunUpdateInputImage()
 }
 
 
+void ImageProcessingSystem::DisplayCurrentInputImage() const
+{
+    image_io_->DisplayImage(input_image_, "Current Input Image");
+}
+
+
+void ImageProcessingSystem::DisplayCurrentOutputImage() const
+{
+    image_io_->DisplayImage(output_image_, "Current Output Image");
+}
+
+
 ImageProcessingSystem::ImageProcessingSystem(const std::string& file_name)
 {
 
-    image_io_ = new ImageIO();
-    image_enhancement_ = new ImageEnhancement();
-    geometric_transform_ = new GeometricTransform();
-    filtering_ = new Filtering();
-    menu_ = new Menu();
+    image_io_ = std::make_unique<ImageIO>();
+    image_enhancement_ = std::make_unique<ImageEnhancement>();
+    geometric_transform_ = std::make_unique<GeometricTransform>();
+    filtering_ = std::make_unique<Filtering>();
+    menu_ = std::make_unique<Menu>();
 
     input_image_ = image_io_->ReadImage(file_name);
     input_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
@@ -184,35 +196,21 @@ ImageProcessingSystem::ImageProcessingSystem(const std::string& file_name)
 
 ImageProcessingSystem::ImageProcessingSystem(const ImageProcessingSystem& image_processing_system)
 {
-    image_io_ = new ImageIO();
-    image_enhancement_ = new ImageEnhancement();
-    geometric_transform_ = new GeometricTransform();
-    filtering_ = new Filtering();
-    menu_ = new Menu();
+
+    image_io_ = std::make_unique<ImageIO>();
+    image_enhancement_ = std::make_unique<ImageEnhancement>();
+    geometric_transform_ = std::make_unique<GeometricTransform>();
+    filtering_ = std::make_unique<Filtering>();
+    menu_ = std::make_unique<Menu>();
 
     input_image_ = image_processing_system.input_image_.clone();
     output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
+
 }
 
 
 ImageProcessingSystem::~ImageProcessingSystem()
 {
-
-    delete image_io_;
-    image_io_ = nullptr;
-
-    delete image_enhancement_;
-    image_enhancement_ = nullptr;
-
-    delete geometric_transform_;
-    geometric_transform_ = nullptr;
-
-    delete filtering_;
-    filtering_ = nullptr;
-
-    delete menu_;
-    menu_ = nullptr;
-
 }
 
 
@@ -234,14 +232,14 @@ cv::Mat ImageProcessingSystem::Run()
         else if (choice == 4)
             RunUpdateInputImage();
         else if (choice == 5)
-            break;
+            DisplayCurrentInputImage();
+        else if (choice == 6)
+            DisplayCurrentOutputImage();
+        else if (choice == 7)
+            return output_image_;
         else
             std::cout << "ERROR:Wrong choice!\n";
     }
-
-    image_io_->DisplayImage(output_image_, "New York!");
-
-    return output_image_;
 
 }
 
