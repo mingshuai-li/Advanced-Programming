@@ -10,6 +10,7 @@
 **********************************************************************************/
 
 
+#include <memory>
 #include "image_io.hpp"
 #include "image_type_conversion.hpp"
 #include "image_enhancement.hpp"
@@ -22,11 +23,11 @@ class ImageProcessingSystem
 {
 
     private:
-        ImageIO* image_io_;
-        ImageEnhancement* image_enhancement_;
-        GeometricTransform* geometric_transform_;
-        Filtering* filtering_;
-        Menu* menu_;
+        std::unique_ptr<ImageIO> image_io_;
+        std::unique_ptr<ImageEnhancement> image_enhancement_;
+        std::unique_ptr<GeometricTransform> geometric_transform_;
+        std::unique_ptr<Filtering> filtering_;
+        std::unique_ptr<Menu> menu_;
         cv::Mat input_image_;
         cv::Mat output_image_;
         /*
@@ -60,6 +61,16 @@ class ImageProcessingSystem
         * Runs the update input image section of the system
         */
         void RunUpdateInputImage();
+
+        /*
+        * Displays the current input image in the system
+        */
+        void DisplayCurrentInputImage() const;
+
+        /*
+        * Displays the current input image in the system
+        */
+        void DisplayCurrentOutputImage() const;
     
     public:
         /*
