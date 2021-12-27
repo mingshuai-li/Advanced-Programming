@@ -48,6 +48,8 @@ The version will be considered as "complete" if
 
 Organize the functions into classes according to the types of the operations.
 
+Utilize smart pointers instead of raw pointers.
+
 
 **Sprint 2: Definition of "done"**
 
@@ -55,6 +57,7 @@ The version will be considered as "complete" if
 
 - All the functions are organized into classes. 
 - The class architecture should be reasonable.
+- Utilize smart pointers instead of raw pointers.
 - The operations should be correct. 
 
 
