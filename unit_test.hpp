@@ -4,12 +4,13 @@
   * Author:         Zichen Zhang, Mingshuai Li
   * Version:        V2.00
   * Date:           2021.12.23
-  * Description:    The header file for the class UnitTest
+  * Description:    The header file for the various unit test classes
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
 
 
+#include <memory>
 #include "image_io.hpp"
 #include "image_type_conversion.hpp"
 #include "image_enhancement.hpp"
@@ -21,9 +22,10 @@ class UnitTestIoAndTypeConversion
 {
 
     public:
-        ImageIO* image_io_;
+        std::unique_ptr<ImageIO> image_io_;
         cv::Mat input_image_;
         cv::Mat output_image_;
+
         /*
         * The constructor
         * @ Parameter:
@@ -58,14 +60,15 @@ class UnitTestIoAndTypeConversion
 
 };
 
+
 class UnitTestImageEnhancement 
 {
 
     public:
-        ImageIO* image_io_;
+        std::unique_ptr<ImageIO> image_io_;
         cv::Mat input_image_;
         cv::Mat output_image_;
-        ImageEnhancement* image_enhancement_;
+        std::unique_ptr<ImageEnhancement> image_enhancement_;
 
         /*
         * The constructor
@@ -121,10 +124,10 @@ class UnitTestGeometricTransform
 {
 
     public:
-        ImageIO* image_io_;
+        std::unique_ptr<ImageIO> image_io_;
         cv::Mat input_image_;
         cv::Mat output_image_;
-        GeometricTransform* geometric_transform_;
+        std::unique_ptr<GeometricTransform> geometric_transform_;
 
         /*
         * The constructor
@@ -158,20 +161,16 @@ class UnitTestGeometricTransform
         */
         void TestFlipUpDown();
 
-
-
-
 };
-
 
 
 class UnitTestFiltering 
 {
     public:
-        ImageIO* image_io_;
+        std::unique_ptr<ImageIO> image_io_;
         cv::Mat input_image_;
         cv::Mat output_image_;
-        Filtering* filtering_;
+        std::unique_ptr<Filtering> filtering_;
 
         /*
         * The constructor
@@ -214,7 +213,6 @@ class UnitTestFiltering
         * Tests the LaplacianFilter()
         */
         void TestLaplacianFilter();
-
 
 };
 
