@@ -17,10 +17,24 @@
 #include "filtering.hpp"
 
 
-class UnitTest
+class UnitTestIoAndTypeConversion
 {
 
     public:
+        ImageIO* image_io_;
+        cv::Mat input_image_;
+        cv::Mat output_image_;
+        /*
+        * The constructor
+        * @ Parameter:
+        *       file_name:    The file name of the input image
+        */
+        UnitTestIoAndTypeConversion(const std::string& file_name);
+
+        /*
+        * The destructor
+        */
+        ~UnitTestIoAndTypeConversion();
 
         /*
         * Tests the ReadImage(), the DisplayImage() and the PrintImageInfo()
@@ -41,6 +55,29 @@ class UnitTest
         * Tests MapDouble2Uchar()
         */
         void TestMapDouble2Uchar();
+
+};
+
+class UnitTestImageEnhancement 
+{
+
+    public:
+        ImageIO* image_io_;
+        cv::Mat input_image_;
+        cv::Mat output_image_;
+        ImageEnhancement* image_enhancement_;
+
+        /*
+        * The constructor
+        * @ Parameter:
+        *       file_name:    The file name of the input image
+        */
+        UnitTestImageEnhancement(const std::string& file_name);
+
+        /*
+        * The destructor
+        */
+        ~UnitTestImageEnhancement();
 
         /*
         * Tests the BrightnessTransform()
@@ -76,6 +113,30 @@ class UnitTest
         * Tests the WindowTransform()
         */
         void TestWindowTransform();
+     
+};
+
+
+class UnitTestGeometricTransform 
+{
+
+    public:
+        ImageIO* image_io_;
+        cv::Mat input_image_;
+        cv::Mat output_image_;
+        GeometricTransform* geometric_transform_;
+
+        /*
+        * The constructor
+        * @ Parameter:
+        *       file_name:    The file name of the input image
+        */
+        UnitTestGeometricTransform(const std::string& file_name);
+
+        /*
+        * The destructor
+        */
+        ~UnitTestGeometricTransform();
 
         /*
         * Tests the Resize()
@@ -96,6 +157,33 @@ class UnitTest
         * Tests the FlipUpDown()
         */
         void TestFlipUpDown();
+
+
+
+
+};
+
+
+
+class UnitTestFiltering 
+{
+    public:
+        ImageIO* image_io_;
+        cv::Mat input_image_;
+        cv::Mat output_image_;
+        Filtering* filtering_;
+
+        /*
+        * The constructor
+        * @ Parameter:
+        *       file_name:    The file name of the input image
+        */
+        UnitTestFiltering(const std::string& file_name);
+
+        /*
+        * The destructor
+        */
+        ~UnitTestFiltering();
 
         /*
         * Tests the Convolve()
@@ -125,7 +213,8 @@ class UnitTest
         /*
         * Tests the LaplacianFilter()
         */
-        void LaplacianFilter();
+        void TestLaplacianFilter();
+
 
 };
 
