@@ -2,12 +2,16 @@
  
   * FileName:       unit_test.hpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V2.00
-  * Date:           2021.12.23
+  * Version:        V3.00
+  * Date:           2022.1.29
   * Description:    The header file for the various unit test classes
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
+
+
+#ifndef UNIT_TEST_H
+#define UNOT_TEST_H
 
 
 #include <memory>
@@ -215,5 +219,8 @@ class UnitTestFiltering
         void TestLaplacianFilter();
 
 };
+
+
+#endif
 
 

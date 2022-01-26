@@ -2,12 +2,16 @@
  
   * FileName:       image_enhancement.hpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V2.00
-  * Date:           2021.12.23
+  * Version:        V3.00
+  * Date:           2022.1.29
   * Description:    The header file for the class ImageEnhancement
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
+
+
+#ifndef IMAGE_ENHANCEMENT_H
+#define IMAGE_ENHANCEMENT_H
 
 
 #include <iostream>
@@ -110,5 +114,8 @@ class ImageEnhancement
         cv::Mat WindowTransform(const cv::Mat& input_image, double lower_threshold, double upper_threshold);
 
 };
+
+
+#endif
 
 
