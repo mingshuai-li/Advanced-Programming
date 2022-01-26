@@ -59,26 +59,6 @@ Having multiple classes in the same source file is not good style. Consider a fo
 
 
 
-
-I think most of your classes don't need to be classes at all. Or they can be static classes. They are not encapsulating data, only containing functions.
-
-
-A better approach could be, for example, to have a single Image class containing your raw image, processed image, and a vector of some sort noting operations that have been applied to the image. All image transformation functions would then be part of this class as well, put them in the header. All your constants will also only need to be defined in this one central place. It will be especially important to have include guards in thei header if you decide to try an approach like this.
-
-
-Then you could keep your current source files and simply include that header in each, thus having a feature-rich Image container and processor, with functions separated among the source files for readability. You would then do something like
-
-
-
-
-
-auto image = Image("some/path/image.png");
-image.ApplySomeTransformation();
-Like the other reviewer mentioned, having a better build system would be helpful. Especially when you have multiple executables (the main and the test).
-That's it from me for now. I really like your project! I'll see later in the week if I can go through more of the code, but at first glance it seems the functions themselves are written well.
-
-
-
 One more thing, your menus might be easier to read and edit if they were using switch and enums instead of ifs with numbers. So you would do something like enum GeometricTransformation(Resize,Rotate,FlipLeftRight,FlipUpDown);
 Then, if you wanna get fancy, you could instead of the normal enums use better enums and then all your menus would boil down to a single function that prints the name of the enum, the numbers and names of its possible values and parses them accordingly.
 
