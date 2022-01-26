@@ -2,12 +2,16 @@
  
   * FileName:       filtering.hpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V2.00
-  * Date:           2021.12.23
+  * Version:        V3.00
+  * Date:           2022.1.29
   * Description:    The header file for the class Filtering
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
+
+
+#ifndef FILTERING_H
+#define FILTERING_H
 
 
 #include <iostream>
@@ -99,5 +103,8 @@ class Filtering
         cv::Mat LaplacianFilter(const cv::Mat& input_image);
 
 };
+
+
+#endif
 
 
