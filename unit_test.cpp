@@ -2,9 +2,9 @@
  
   * FileName:       unit_test.cpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V1.00
-  * Date:           2021.11.29
-  * Description:    The implementation for the unit test functions
+  * Version:        V2.00
+  * Date:           2021.12.23
+  * Description:    The implementation for the various unit test classes
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
@@ -13,199 +13,295 @@
 #include "unit_test.hpp"
 
 
-void TestImageIO()
+UnitTestIoAndTypeConversion::UnitTestIoAndTypeConversion(const std::string& file_name)
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    DisplayImage(input_image, "New York!");
-    PrintImageInfo(input_image);
+
+    image_io_ = std::make_unique<ImageIO>();
+
+    input_image_ = image_io_->ReadImage(file_name);
+    output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
+
 }
 
 
-void TestConvertRGB2GrayScale()
+UnitTestIoAndTypeConversion::~UnitTestIoAndTypeConversion()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat output_image = ConvertRGB2GrayScale(input_image);
-    DisplayImage(output_image, "New York!");
 }
 
 
-void TestConvertUchar2DoubleC1()
+void UnitTestIoAndTypeConversion::TestImageIO()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    PrintImageInfo(input_image);
-    cv::Mat output_image = ConvertUchar2DoubleC1(grayscale_input_image);
-    PrintImageInfo(output_image);
+
+    image_io_->DisplayImage(input_image_, "The Current Input Image");
+    image_io_->PrintImageInfo(input_image_);
+
 }
 
 
-void TestMapDouble2Uchar()
+void UnitTestIoAndTypeConversion::TestConvertRGB2GrayScale()
 {
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTestIoAndTypeConversion::TestConvertUchar2DoubleC1()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    image_io_->PrintImageInfo(output_image_);
+    output_image_ = ImageTypeConversion::ConvertUchar2DoubleC1(output_image_);
+    image_io_->PrintImageInfo(output_image_);
+
+}
+
+
+void UnitTestIoAndTypeConversion::TestMapDouble2Uchar()
+{
+
     double n1 = 256.0;
     double n2 = 253.0;
     double n3 = -3.0;
-    uchar mapped_n1 = MapDouble2Uchar(n1);
-    uchar mapped_n2 = MapDouble2Uchar(n2);
-    uchar mapped_n3 = MapDouble2Uchar(n3);
+    uchar mapped_n1 = ImageTypeConversion::MapDouble2Uchar(n1);
+    uchar mapped_n2 = ImageTypeConversion::MapDouble2Uchar(n2);
+    uchar mapped_n3 = ImageTypeConversion::MapDouble2Uchar(n3);
     std::cout << n1 << "   " << n2 << "   " << n3 << '\n';
     std::cout << mapped_n1 << "   " << mapped_n2 << "   " << mapped_n3 << '\n';
+
 }
 
 
-void TestBrightnessTransform()
+UnitTestImageEnhancement::UnitTestImageEnhancement(const std::string& file_name)
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = BrightnessTransform(input_image, 30);
-    DisplayImage(output_image, "New York!");
+
+    image_io_ = std::make_unique<ImageIO>();
+    
+    input_image_ = image_io_->ReadImage(file_name);
+    
+    output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
+
+    image_enhancement_  = std::make_unique<ImageEnhancement>();
+
 }
 
 
-void TestInverseTransform()
+UnitTestImageEnhancement::~UnitTestImageEnhancement()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = InverseTransform(input_image);
-    DisplayImage(output_image, "New York!");
 }
 
 
-void TestGammaTransform()
+void UnitTestImageEnhancement::TestBrightnessTransform()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = GammaTransform(input_image, 1, 0.4);
-    DisplayImage(output_image, "New York!");
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->BrightnessTransform(output_image_, 30);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
 }
 
 
-void TestLogTransform()
+void UnitTestImageEnhancement::TestInverseTransform()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = LogTransform(input_image, 1.2);
-    DisplayImage(output_image, "New York!");
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->InverseTransform(output_image_);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
 }
 
 
-void TestNormalizationTransform()
+void UnitTestImageEnhancement::TestGammaTransform()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = NormalizationTransform(input_image, 100, 150);
-    DisplayImage(output_image, "New York!");
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->GammaTransform(output_image_, 1, 0.4);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
 }
 
 
-void TestThresholdTransform()
+void UnitTestImageEnhancement::TestLogTransform()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = ThresholdTransform(input_image, 100);
-    DisplayImage(output_image, "New York!");
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->LogTransform(output_image_, 1.2);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
 }
 
 
-void TestWindowTransform()
+void UnitTestImageEnhancement::TestNormalizationTransform()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = WindowTransform(input_image, 100, 150);
-    DisplayImage(output_image, "New York!");
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->NormalizationTransform(output_image_, 100, 150);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
 }
 
 
-void TestResize()
+void UnitTestImageEnhancement::TestThresholdTransform()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = Resize(input_image, 500, 500);
-    DisplayImage(output_image, "New York!");
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->ThresholdTransform(output_image_, 100);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
 }
 
 
-void TestRotate()
+void UnitTestImageEnhancement::TestWindowTransform()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = Rotate(input_image, 45);
-    DisplayImage(output_image, "New York!");
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->WindowTransform(output_image_, 100, 150);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
 }
 
 
-void TestFlipLeftRight()
+UnitTestGeometricTransform::UnitTestGeometricTransform(const std::string& file_name)
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = FlipLeftRight(input_image);
-    DisplayImage(output_image, "New York!");
+
+    image_io_ = std::make_unique<ImageIO>();
+    
+    input_image_ = image_io_->ReadImage(file_name);
+    
+    output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
+
+    geometric_transform_ = std::make_unique<GeometricTransform>();
+
 }
 
 
-void TestFlipUpDown()
+UnitTestGeometricTransform::~UnitTestGeometricTransform()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = FlipUpDown(input_image);
-    DisplayImage(output_image, "New York!");
 }
 
 
-void TestConvolve()
+void UnitTestGeometricTransform::TestResize()
 {
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = geometric_transform_->Resize(output_image_, 0.5, 0.5);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTestGeometricTransform::TestRotate()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = geometric_transform_->Rotate(output_image_, 45);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTestGeometricTransform::TestFlipLeftRight()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = geometric_transform_->FlipLeftRight(output_image_);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTestGeometricTransform::TestFlipUpDown()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = geometric_transform_->FlipUpDown(output_image_);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+UnitTestFiltering::UnitTestFiltering(const std::string& file_name)
+{
+
+    image_io_ = std::make_unique<ImageIO>();
+    
+    input_image_ = image_io_->ReadImage(file_name);
+    
+    output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
+
+    filtering_ = std::make_unique<Filtering>();
+
+}
+
+
+UnitTestFiltering::~UnitTestFiltering()
+{
+}
+
+
+void UnitTestFiltering::TestConvolve()
+{
+
     cv::Mat kernel = cv::Mat::ones(3, 3, CV_64FC1);
     for (int i = 0; i < 3; i++)
         for (int j = 0; j < 3; j++)
             kernel.at<double>(i, j) /= 9;
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = Convolve(grayscale_input_image, kernel);
-    DisplayImage(output_image, "New York!");
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = filtering_->Convolve(output_image_, kernel);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
 }
 
 
-void TestLowPassFilter()
+void UnitTestFiltering::TestLowPassFilter()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = LowPassFilter(grayscale_input_image, 3, 3);
-    DisplayImage(output_image, "New York!");
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = filtering_->LowPassFilter(output_image_, 3, 3);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
 }
 
 
-void TestHighPassFilter()
+void UnitTestFiltering::TestHighPassFilter()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = HighPassFilter(grayscale_input_image);
-    DisplayImage(output_image, "New York!");
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = filtering_->HighPassFilter(output_image_);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
 }
 
 
-void TestBandPassFilter()
+void UnitTestFiltering::TestBandPassFilter()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = BandPassFilter(grayscale_input_image, 10, 2);
-    DisplayImage(output_image, "New York!");
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = filtering_->BandPassFilter(output_image_, 10, 2);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
 }
 
 
-void TestGaussianFilter()
+void UnitTestFiltering::TestGaussianFilter()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = GaussianFilter(grayscale_input_image, 3, 3, 1.0);
-    DisplayImage(output_image, "New York!");
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = filtering_->GaussianFilter(output_image_, 3, 3, 1.0);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
 }
 
 
-void LaplacianFilter()
+void UnitTestFiltering::TestLaplacianFilter()
 {
-    cv::Mat input_image = ReadImage("NewYork.jpg");
-    cv::Mat grayscale_input_image = ConvertRGB2GrayScale(input_image);
-    cv::Mat output_image = LaplacianFilter(grayscale_input_image);
-    DisplayImage(output_image, "New York!");
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = filtering_->LaplacianFilter(output_image_);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
 }
 
 

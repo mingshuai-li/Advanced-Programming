@@ -36,9 +36,28 @@ Don't use classes. Functions are sufficient.
 
 The version will be considered as "complete" if 
 
-- The project contains `README.md` file explaining the project
-- Users can choose which operation to perform on images
-- Users should be able to control the filter size
-- The operations should be correct
+- The project contains `README.md` file explaining the project.
+- Users can choose which operation to perform on images.
+- Users should be able to control the size of some of the filters.
+- The operations should be correct.
+
+
+
+### Sprint 2 (OOP)
+----
+
+Organize the functions into classes according to the types of the operations.
+
+Utilize smart pointers instead of raw pointers.
+
+
+**Sprint 2: Definition of "done"**
+
+The version will be considered as "complete" if 
+
+- All the functions are organized into classes. 
+- The class architecture should be reasonable.
+- Utilize smart pointers instead of raw pointers.
+- The operations should be correct. 
 
 

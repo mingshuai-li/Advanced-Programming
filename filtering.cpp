@@ -2,9 +2,9 @@
  
   * FileName:       filtering.cpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V1.00
-  * Date:           2021.11.29
-  * Description:    The implementation for the filtering algorithms
+  * Version:        V2.00
+  * Date:           2021.12.23
+  * Description:    The implementation for the class Filtering
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
@@ -14,7 +14,11 @@
 #include "image_type_conversion.hpp"
 
 
-cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
+const double Filtering::PI_ = 3.141592654;
+const double Filtering::NATURAL_CONSTANT_ = 2.7182818284;
+
+
+cv::Mat Filtering::Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
 {
 
     const int image_height = input_image.rows;
@@ -32,6 +36,7 @@ cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
             padded_image.at<uchar>(i + half_kheight, j + half_kwidth) = input_image.at<uchar>(i, j);
     
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
+
     // Computes the coefficients for the coordinates mapping in the convolution
     const int coefficient_h = (-2 * half_kheight) / (kernel_height - 1);
     const int coefficient_w = (-2 * half_kwidth) / (kernel_width - 1);
@@ -58,7 +63,7 @@ cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
                     weighted_sum += padded_image.at<uchar>(transformed_i, transformed_j) * kernel.at<double>(k, l);
                 }
             }
-            weighted_sum = MapDouble2Uchar(weighted_sum);
+            weighted_sum = ImageTypeConversion::MapDouble2Uchar(weighted_sum);
             output_image.at<uchar>(i, j) = weighted_sum;
         }
     }
@@ -68,13 +73,13 @@ cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
 }
 
 
-cv::Mat LowPassFilter(const cv::Mat& input_image, int kernel_height, int kernel_width)
+cv::Mat Filtering::LowPassFilter(const cv::Mat& input_image, int kernel_height, int kernel_width)
 {
 
     cv::Mat kernel = cv::Mat::ones(kernel_height, kernel_width, CV_64FC1);
 
     // Computes the uniform kernel
-    double kernel_coefficient = 1 / static_cast<double>(kernel_height * kernel_width);
+    const double kernel_coefficient = 1 / static_cast<double>(kernel_height * kernel_width);
     for (int i = 0; i < kernel_height; i++)
         for (int j = 0; j < kernel_width; j++)
             kernel.at<double>(i, j) *= kernel_coefficient;
@@ -87,7 +92,7 @@ cv::Mat LowPassFilter(const cv::Mat& input_image, int kernel_height, int kernel_
 }
 
 
-cv::Mat HighPassFilter(const cv::Mat& input_image)
+cv::Mat Filtering::HighPassFilter(const cv::Mat& input_image)
 {
 
     // Computes the kernel for computing the image's gradients in the height direction
@@ -142,13 +147,13 @@ cv::Mat HighPassFilter(const cv::Mat& input_image)
 }
 
 
-cv::Mat BandPassFilter(const cv::Mat& input_image, double central_freq, double band_width)
+cv::Mat Filtering::BandPassFilter(const cv::Mat& input_image, double central_freq, double band_width)
 {
 
     const int image_height = input_image.rows;
     const int image_width = input_image.cols;
 
-    cv::Mat input_image_double = ConvertUchar2DoubleC1(input_image); 
+    cv::Mat input_image_double =  ImageTypeConversion::ConvertUchar2DoubleC1(input_image); 
 
     cv::Mat frequency_domain_image = cv::Mat::zeros(image_height, image_width, CV_64FC1);
 
@@ -183,18 +188,21 @@ cv::Mat BandPassFilter(const cv::Mat& input_image, double central_freq, double b
 }
 
 
-cv::Mat GaussianFilter(const cv::Mat& input_image, int kernel_height, int kernel_width, double kernel_sigma)
+cv::Mat Filtering::GaussianFilter(const cv::Mat& input_image, int kernel_height, int kernel_width, double kernel_sigma)
 {
 
     cv::Mat kernel = cv::Mat::zeros(kernel_height, kernel_width, CV_64FC1);
 
     const int half_kheight = kernel_height / 2;
     const int half_kwidth = kernel_width / 2;
+
     // The Gaussian filter formula: value = coefficient1 * e^((-(i - half_kheight)^2 - (j - half_kwidth)^2) * coefficient2)
-    const double coefficient1 = 1 / (2 * PI * kernel_sigma * kernel_sigma);
+    const double coefficient1 = 1 / (2 * Filtering::PI_ * kernel_sigma * kernel_sigma);
     const double coefficient2 = 1 / (2 * kernel_sigma * kernel_sigma);
+
     // Stores the sum of the Gaussian Kernel's values
     double sum = 0.0;
+
     // Stores the (i - half_kheight)^2 and the (j - half_kwidth)^2
     double offset_i = 0.0;
     double offset_j = 0.0;
@@ -207,7 +215,7 @@ cv::Mat GaussianFilter(const cv::Mat& input_image, int kernel_height, int kernel
         for (int j = 0; j < kernel_width; j++)
         {
             offset_j = pow(j - half_kwidth, 2);
-            current_kernel_value = coefficient1 * pow(NATURAL_CONSTANT, (-offset_i - offset_j) * coefficient2);
+            current_kernel_value = coefficient1 * pow(Filtering::NATURAL_CONSTANT_, (-offset_i - offset_j) * coefficient2);
             kernel.at<double>(i, j) = current_kernel_value;
             sum += current_kernel_value;
         }
@@ -225,7 +233,7 @@ cv::Mat GaussianFilter(const cv::Mat& input_image, int kernel_height, int kernel
 }
 
 
-cv::Mat LaplacianFilter(const cv::Mat& input_image)
+cv::Mat Filtering::LaplacianFilter(const cv::Mat& input_image)
 {
 
     // Computes the Laplacian Kernel
