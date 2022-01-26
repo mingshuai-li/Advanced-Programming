@@ -2,12 +2,16 @@
  
   * FileName:       geometric_transform.hpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V2.00
-  * Date:           2021.12.23
+  * Version:        V3.00
+  * Date:           2022.1.29
   * Description:    The header file for the class GeometricTransform
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
+
+
+#ifndef GEOMETRIC_TRANSFORM_H
+#define GEOMETRIC_TRANSFORM_H
 
 
 #include <iostream>
@@ -60,5 +64,8 @@ class GeometricTransform
         cv::Mat FlipUpDown(const cv::Mat& input_image);
 
 };
+
+
+#endif
 
 
