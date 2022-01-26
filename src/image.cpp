@@ -13,9 +13,68 @@
 #include "../include/image.hpp"
 
 
+const double Image::PI_ = 3.141592654;
+const double Image::NATURAL_CONSTANT_ = 2.718281828459;
+
+
 cv::Mat Image::ReadImage(const std::string& file_name)
 {
     return cv::imread(file_name);
+}
+
+
+cv::Mat Image::ConvertRGB2GrayScale(const cv::Mat& input_image)
+{
+
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
+
+    cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
+
+    // The weights utilized to map the RGB channels to the grayscale channel
+    const double weights[3] = {0.0722, 0.7152, 0.2126};
+    double weighted_sum = 0.0;
+
+    for (int i = 0; i < image_height; i++)
+    {
+        for (int j = 0; j < image_width; j++)
+        {
+            const cv::Vec3b& channel = input_image.at<cv::Vec3b>(i, j);
+            weighted_sum = 0.0;
+
+            // Computes the grayscale channel value
+            for (int k = 0; k < 3; k++)
+                weighted_sum += channel[k] * weights[k];
+
+            output_image.at<uchar>(i, j) = static_cast<uchar>(weighted_sum);
+        }
+    }
+
+    return output_image;
+  
+}
+
+
+cv::Mat Image::ConvertUchar2DoubleC1(const cv::Mat& input_image)
+{
+
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
+
+    cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_64FC1);
+
+    for (int i = 0; i < image_height; i++)
+        for (int j = 0; j < image_width; j++)
+            output_image.at<double>(i, j) = static_cast<double>(input_image.at<uchar>(i, j));
+    
+    return output_image;
+
+}
+
+
+uchar Image::MapDouble2Uchar(double n)
+{
+    return (n > 255.0) ? static_cast<uchar>(255) : ((n < 0.0) ? static_cast<uchar>(0) : static_cast<uchar>(n));
 }
 
 
@@ -64,7 +123,7 @@ cv::Mat Image::Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
                     weighted_sum += padded_image.at<uchar>(transformed_i, transformed_j) * kernel.at<double>(k, l);
                 }
             }
-            weighted_sum = ImageTypeConversion::MapDouble2Uchar(weighted_sum);
+            weighted_sum = MapDouble2Uchar(weighted_sum);
             output_image.at<uchar>(i, j) = weighted_sum;
         }
     }
@@ -131,7 +190,7 @@ cv::Mat Image::Rotate(const cv::Mat& input_image, double angle)
     // Makes a copy of the input image
 	cv::Mat output_image = cv::Mat::zeros(output_image_size, output_image_size, CV_8UC1);
 
-	const double angle_rad = angle * GeometricTransform::PI_ / 180;
+	const double angle_rad = angle * Image::PI_ / 180;
     const double sin_angle = sin(angle_rad);
     const double cos_angle = cos(angle_rad);
 
@@ -163,7 +222,7 @@ cv::Mat Image::Rotate(const cv::Mat& input_image, double angle)
 }
 
 
-cv::Mat Image:FlipLeftRight(const cv::Mat& input_image)
+cv::Mat Image::FlipLeftRight(const cv::Mat& input_image)
 {
 
     const int image_height = input_image.rows;
@@ -218,7 +277,7 @@ cv::Mat Image::BrightnessTransform(const cv::Mat& input_image, double delta)
         for (int j = 0; j < image_width; j++)
         {
             new_value = static_cast<double>(input_image.at<uchar>(i, j)) + delta;
-            output_image.at<uchar>(i, j) = ImageTypeConversion::MapDouble2Uchar(new_value);
+            output_image.at<uchar>(i, j) = MapDouble2Uchar(new_value);
             // Adds a constant to each pixel's value
         }
     }
@@ -264,7 +323,7 @@ cv::Mat Image::GammaTransform(const cv::Mat& input_image, double coefficient_a, 
         for (int j = 0; j < image_width; j++)
         {
             new_value = coefficient_a * pow(static_cast<double>(input_image.at<uchar>(i, j)), exponent_alpha);
-            output_image.at<uchar>(i, j) = ImageTypeConversion::MapDouble2Uchar(new_value);
+            output_image.at<uchar>(i, j) = MapDouble2Uchar(new_value);
             // output_image = a * input_image^alpha
         }
     }
@@ -290,7 +349,7 @@ cv::Mat Image::LogTransform(const cv::Mat& input_image, double coefficient_a)
         for (int j = 0; j < image_width; j++)
         {
             new_value = coefficient_a * log(static_cast<double>(input_image.at<uchar>(i, j)) + 1);
-            output_image.at<uchar>(i, j) = ImageTypeConversion::MapDouble2Uchar(new_value);
+            output_image.at<uchar>(i, j) = MapDouble2Uchar(new_value);
             // output_image = a * log(1 + input_image) 
         }
     }
@@ -459,7 +518,7 @@ cv::Mat Image::BandPassFilter(const cv::Mat& input_image, double central_freq, d
     const int image_height = input_image.rows;
     const int image_width = input_image.cols;
 
-    cv::Mat input_image_double =  ImageTypeConversion::ConvertUchar2DoubleC1(input_image); 
+    cv::Mat input_image_double = ConvertUchar2DoubleC1(input_image); 
 
     cv::Mat frequency_domain_image = cv::Mat::zeros(image_height, image_width, CV_64FC1);
 
@@ -503,7 +562,7 @@ cv::Mat Image::GaussianFilter(const cv::Mat& input_image, int kernel_height, int
     const int half_kwidth = kernel_width / 2;
 
     // The Gaussian filter formula: value = coefficient1 * e^((-(i - half_kheight)^2 - (j - half_kwidth)^2) * coefficient2)
-    const double coefficient1 = 1 / (2 * Filtering::PI_ * kernel_sigma * kernel_sigma);
+    const double coefficient1 = 1 / (2 * Image::PI_ * kernel_sigma * kernel_sigma);
     const double coefficient2 = 1 / (2 * kernel_sigma * kernel_sigma);
 
     // Stores the sum of the Gaussian Kernel's values
@@ -521,7 +580,7 @@ cv::Mat Image::GaussianFilter(const cv::Mat& input_image, int kernel_height, int
         for (int j = 0; j < kernel_width; j++)
         {
             offset_j = pow(j - half_kwidth, 2);
-            current_kernel_value = coefficient1 * pow(Filtering::NATURAL_CONSTANT_, (-offset_i - offset_j) * coefficient2);
+            current_kernel_value = coefficient1 * pow(Image::NATURAL_CONSTANT_, (-offset_i - offset_j) * coefficient2);
             kernel.at<double>(i, j) = current_kernel_value;
             sum += current_kernel_value;
         }
