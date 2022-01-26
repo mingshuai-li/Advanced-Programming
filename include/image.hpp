@@ -15,7 +15,9 @@
 
 
 #include <iostream>
+#include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
+#include <opencv2/imgcodecs.hpp>
 
 
 class Image
@@ -33,6 +35,41 @@ class Image
         *                  The image that is read in
         */
         cv::Mat ReadImage(const std::string& file_name);
+
+        /*
+        * Converts the RGB image to the gray scale image
+        * @ Parameter:
+        *       input_image:    The input image reference
+        * @ Return:
+        *                       The output image
+        */
+        cv::Mat ConvertRGB2GrayScale(const cv::Mat& input_image);
+
+
+        /*
+        * Converts the image type from uchar channel 1 to double channel1 
+        * @ Parameter:
+        *       input_image:    The input image reference
+        * @ Return:
+        *                       The output image
+        */
+        cv::Mat ConvertUchar2DoubleC1(const cv::Mat& input_image);
+
+
+        /*
+        * Maps the double n to the value range of uchar according to the following rules:
+        * If n > 255.0:
+        *     maps n to uchar 255
+        * Else if n < 0.0:
+        *     maps n to uchar 0
+        * Else
+        *     maps to static_cast<uchar>(n)
+        * @ Parameter:
+        *       n:              The input double value
+        * @ Return:
+        *                       The output value
+        */
+        uchar MapDouble2Uchar(double n);
 
         /*
         * Performs the convolution utilizing the input image and the kernel
@@ -273,22 +310,9 @@ class Image
         */
         cv::Mat LaplacianFilter(const cv::Mat& input_image);
 
-}
-
-
-
-
-
-
+};
 
 
 #endif
-
-
-
-
-
-
-
 
 
