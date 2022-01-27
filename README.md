@@ -64,12 +64,6 @@ Then, if you wanna get fancy, you could instead of the normal enums use better e
 
 
 
-
-Hi,first congrats for the detailed and different project.
-I looked at your code and it seems very well designed and I couldn't really find something to add.
-But I will try to give some different approaches that I would use if I had taken that project.
-1- Using virtual functions and make image_processing_system abstract class is one idea for runtime polymorphism. That way filtering, image_enhancement and geometric_transform will be child classes of image_processing_system which make it better design in my opinion.
-2- A development can be option to apply different transformations and display them side by side.
 3- Also taking a file of images and apply some transforms and save them will be very useful in for data augmentation in computer vision. Since C++ is faster than python or Matlab it may be a goal for this project.
 I will try to add more comments in the following days if I can find some!
 
