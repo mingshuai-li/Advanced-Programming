@@ -53,7 +53,7 @@ class Image
         * @ Return:
         *                       The output image
         */
-        cv::Mat ConvertUchar2DoubleC1(const cv::Mat& input_image);
+        cv::Mat ConvertUchar2DoubleC1(const cv::Mat& input_image) const;
 
 
         /*
@@ -69,7 +69,7 @@ class Image
         * @ Return:
         *                       The output value
         */
-        uchar MapDouble2Uchar(double n);
+        uchar MapDouble2Uchar(double n) const;
 
         /*
         * Performs the convolution utilizing the input image and the kernel
@@ -79,7 +79,7 @@ class Image
         * @ Return:
         *                       The output image
         */
-        cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel);
+        cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel) const;
     
     public:
         /*
@@ -104,97 +104,129 @@ class Image
         /*
         * Displays the image
         * @ Parameter:
+        *       image_title: The title of the image
+        */
+        void DisplayImage(const std::string& image_title) const;
+
+        /*
+        * Displays the image
+        * @ Parameter:
         *       image:       The image reference
         *       image_title: The title of the image
         */
-        void DisplayImage(const cv::Mat& image, const std::string& image_title);
+        void DisplayImage(const cv::Mat& image, const std::string& image_title) const;
 
         /*
         * Prints the basic information of the image
-        * @ Parameter:
-        *       image:     The image reference
         */
-        void PrintImageInfo(const cv::Mat& image);
+        void PrintImageInfo() const;
+
+        /*
+        * Gets the height of the image
+        * @ Return:
+        *                  The height of the image
+        */
+        int GetImageHeight() const;
+
+        /*
+        * Gets the width of the image
+        * @ Return:
+        *                  The width of the image
+        */
+        int GetImageWidth() const;
+
+        /*
+        * Gets a copy of the image
+        * @ Return:
+        *                  The copy of the image
+        */
+        cv::Mat GetImage() const;
+
+        /*
+        * Sets a new image
+        * @ Parameter:
+        *       file_name:      The file name of the input image
+        *     
+        */
+        void SetNewImage(const std::string& file_name);
+
+        /*
+        * Sets a new image
+        * @ Parameter:
+        *       new_image:      The new image
+        *     
+        */
+        void SetNewImage(const cv::Mat& new_image);
 
         /*
         * Resizes the image to the given scale
         * @ Parameter:
-        *       input_image:    The input image reference
         *       height_scaling: The scaling factor alongside the height of the output image
         *       width_scaling:  The scaling factor alongside the width of the output image
-        *       output_image:   The output image reference
+        * @ Return:
+        *                       The resized image
         */
-        cv::Mat Resize(const cv::Mat& input_image, double height_scaling, double width_scaling);
-
+        cv::Mat Resize(double height_scaling, double width_scaling) const;
 
         /*
         * Rotates the image
         * @ Parameter:
-        *       input_image:    The input image reference
         *       angle:          The angle that the input image rotates
-        *       output_image:   The output image reference
+        * @ Return:
+        *                       The rotated image
         */
-        cv::Mat Rotate(const cv::Mat& input_image, double angle);
-
+        cv::Mat Rotate(double angle) const;
 
         /*
         * Flips the image left to right
-        * @ Parameter:
-        *       input_image:    The input image reference
-        *       output_image:   The output image reference
+        * @ Return:
+        *                       The left-right flipped image
         */
-        cv::Mat FlipLeftRight(const cv::Mat& input_image);
-
+        cv::Mat FlipLeftRight() const;
 
         /*
         * Flips the image up to down
-        * @ Parameter:
-        *       input_image:    The input image reference
-        *       output_image:   The output image reference
+        * @ Return:
+        *                       The up-down flipped image
         */
-        cv::Mat FlipUpDown(const cv::Mat& input_image);
+        cv::Mat FlipUpDown() const;
 
         /*
         * Changes each pixel's values by a constant value
         * @ Parameter:
-        *       input_image:    The input image reference
         *       delta:          The shift to each pixel's values
         * @ Return:
         *                       The output image
         */
-        cv::Mat BrightnessTransform(const cv::Mat& input_image, double delta);
+        cv::Mat BrightnessTransform(double delta) const;
 
         /*
         * Inverses the image
-        * @ Parameter:
-        *       input_image:    The input image reference
         * @ Return:
         *                       The output image
         */
-        cv::Mat InverseTransform(const cv::Mat& input_image);
+        cv::Mat InverseTransform() const;
 
         /*
         * Applies the gamma transform to the image, the formula is as follows.
         * output_image = a * input_image^alpha
         * @ Parameter:
-        *       input_image:    The input image reference
         *       coefficient_a:  The coefficient a
         *       exponent_alpha: The exponent alpha
         * @ Return:
         *                      The output image
         */
-        cv::Mat GammaTransform(const cv::Mat& input_image, double coefficient_a, double exponent_alpha);
+        cv::Mat GammaTransform(double coefficient_a, double exponent_alpha) const;
 
         /*
         * Applies the log transform to the image, the formula is as follows.
         * output_image = a * log(1 + input_image)
         * @ Parameter:
-        *       input_image:    The input image reference
         *       coefficient_a:  The coefficient a
         * @ Return:
         *                       The output image
         */
-        cv::Mat LogTransform(const cv::Mat& input_image, double coefficient_a);
+        cv::Mat LogTransform(double coefficient_a) const;
 
         /*
         * Applies the normalization transform to the image, the formula is as follows.
@@ -206,13 +238,12 @@ class Image
         * If the pixel's intensities > b:
         *     The corresponding pixel's intensities of the output image = 255
         * @ Parameter:
-        *       input_image:      The input image reference
         *       lower_threshold:  The lower threshold
         *       upper_threshold:  The upper threshold
         * @ Return:
         *                         The output image
         */
-        cv::Mat NormalizationTransform(const cv::Mat& input_image, double lower_threshold, double upper_threshold);
+        cv::Mat NormalizationTransform(double lower_threshold, double upper_threshold) const;
 
         /*
         * Applies the threshold transform to the image, the formula is as follows.
@@ -221,12 +252,11 @@ class Image
         * Else:
         *     The corresponding pixel's intensities of the output image = pixel's intensities
         * @ Parameter:
-        *       input_image:    The input image reference
         *       threshold:      The threshold
         * @ Return:
         *                       The output image
         */
-        cv::Mat ThresholdTransform(const cv::Mat& input_image, double threshold);
+        cv::Mat ThresholdTransform(double threshold) const;
 
         /*
         * Applies the window transform to the image, the formula is as follows.
@@ -237,34 +267,30 @@ class Image
         * If the pixel's intensities > b:
         *     The corresponding pixel's intensities of the output image = 0
         * @ Parameter:
-        *       input_image:      The input image reference
         *       lower_threshold:  The lower threshold
         *       upper_threshold:  The upper threshold
         * @ Return:
         *                      The output image
         */
-        cv::Mat WindowTransform(const cv::Mat& input_image, double lower_threshold, double upper_threshold);
+        cv::Mat WindowTransform(double lower_threshold, double upper_threshold) const;
 
         /*
         * Performs the low-pass filtering on the input image
         * @ Parameter:
-        *       input_image:    The input image reference
         *       kernel_height:  The height of the kernel
         *       kernel_width:   The width of the kernel
         * @ Return:
         *                       The output image
         */
-        cv::Mat LowPassFilter(const cv::Mat& input_image, int kernel_height, int kernel_width);
+        cv::Mat LowPassFilter(int kernel_height, int kernel_width) const;
 
 
         /*
         * Performs the high-pass filtering on the input image
-        * @ Parameter:
-        *       input_image:    The input image reference
         * @ Return:
         *                       The output image
         */
-        cv::Mat HighPassFilter(const cv::Mat& input_image);
+        cv::Mat HighPassFilter() const;
 
 
         /*
@@ -277,38 +303,30 @@ class Image
         * If the frequency > central frequency + bandwidth / 2:
         *                       frequency = frequency * 1
         * @ Parameter:
-        *       input_image:    The input image reference
         *       central_frea:   The central frequency
         *       band_width:     The bandwidth
         * @ Return:
         *                       The output image
         */
-        cv::Mat BandPassFilter(const cv::Mat& input_image, double central_freq, double band_width);
-
+        cv::Mat BandPassFilter(double central_freq, double band_width) const;
 
         /*
         * Performs the Gaussian filtering on the input image
         * @ Parameter:
-        *       input_image:    The input image reference
         *       kernel_height:  The height of the kernel
         *       kernel_width:   The width of the kernel
         *       kernel_sigma:   The standard deviation of the Gaussian filter
         * @ Return:
         *                       The output image
         */
-        cv::Mat GaussianFilter(const cv::Mat& input_image, int kernel_hieght, int kernel_width, double kernel_sigma);
-
+        cv::Mat GaussianFilter(int kernel_hieght, int kernel_width, double kernel_sigma) const;
 
         /*
         * Performs the Laplacian filtering on the input image
-        * @ Parameter:
-        *       input_image:    The input image reference
-        *       kernel_height:  The height of the kernel
-        *       kernel_width:   The width of the kernel
         * @ Return:
         *                       The output image
         */
-        cv::Mat LaplacianFilter(const cv::Mat& input_image);
+        cv::Mat LaplacianFilter() const;
 
 };
 
