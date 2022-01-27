@@ -619,8 +619,8 @@ cv::Mat Image::GaussianFilter(int kernel_height, int kernel_width, double kernel
     const int half_kwidth = kernel_width / 2;
 
     // The Gaussian filter formula: value = coefficient1 * e^((-(i - half_kheight)^2 - (j - half_kwidth)^2) * coefficient2)
-    const double coefficient1 = 1 / (2 * Image::PI_ * kernel_sigma * kernel_sigma);
-    const double coefficient2 = 1 / (2 * kernel_sigma * kernel_sigma);
+    const double coefficient1 = 1.0 / (2 * Image::PI_ * kernel_sigma * kernel_sigma);
+    const double coefficient2 = 1.0 / (2 * kernel_sigma * kernel_sigma);
 
     // Stores the sum of the Gaussian Kernel's values
     double sum = 0.0;
