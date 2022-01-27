@@ -6,7 +6,7 @@
 ---
 Generally image processing is a very comprehensive area and it is also suitable to use C++ to write image processing algorithms. In this project, we implement various operations on images, especially image enhancement, geometric transform and filtering.
 
-### Sprint 1 (basics)
+### Sprint 1 (Basics)
 ----
 
 Input an image using a library such as [OpenCV](https://opencv.org/) or [stb_image](https://github.com/nothings/stb) and implement various operations on images.
@@ -51,48 +51,6 @@ Organize the functions into classes according to the types of the operations.
 Utilize smart pointers instead of raw pointers.
 
 
-
-Unit tests aren't really tests if they're not testing anything automatically. Ideally, you should have reference output images for each process you want to test (e.g. generated with python or imagej or some other established general purpose tool). Then, instead of displaying the resulting image, you should compare the reference output and yout output (with some accuracy, esp if using floats) and return a value (e.g. bool) telling whether your operation worked as expected or not. You could then also use a testing framework, but I guess here that's unnecessary, as long as you report which tests have passed and which - failed.
-
-
-Having multiple classes in the same source file is not good style. Consider a folder of separate source and header files for each class (so like a folder tests with file inside TestGeometric.cpp TestGeometric.hpp TestFiltering.cpp TestGeometric.hpp
-
-
-
-One more thing, your menus might be easier to read and edit if they were using switch and enums instead of ifs with numbers. So you would do something like enum GeometricTransformation(Resize,Rotate,FlipLeftRight,FlipUpDown);
-Then, if you wanna get fancy, you could instead of the normal enums use better enums and then all your menus would boil down to a single function that prints the name of the enum, the numbers and names of its possible values and parses them accordingly.
-
-
-
-3- Also taking a file of images and apply some transforms and save them will be very useful in for data augmentation in computer vision. Since C++ is faster than python or Matlab it may be a goal for this project.
-I will try to add more comments in the following days if I can find some!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 **Sprint 2: Definition of "done"**
 
 The version will be considered as "complete" if 
@@ -100,6 +58,51 @@ The version will be considered as "complete" if
 - All the functions are organized into classes. 
 - The class architecture should be reasonable.
 - Utilize smart pointers instead of raw pointers.
-- The operations should be correct. 
+- The operations should be correct.
+
+
+
+### Sprint 3 (Refactoring and Refining)
+----
+
+Refactor the class architecture according to the review in Sprint 2.
+
+Seperate the files into different folders.
+
+Refine some code such as the implementation Convole().
+
+Refine test functions.
+
+Add CMake.
+
+
+**Sprint 3: Definition of "done"**
+
+The version will be considered as "complete" if 
+
+- The class architecture are refactored according to the review in Sprint2.
+- The files are seperated into different folders.
+- Code including test functions are refined.
+- CMake is added.
+
+### TO DO LIST
+0.CMake
+
+
+1.Unit tests aren't really tests if they're not testing anything automatically. Ideally, you should have reference output images for each process you want to test (e.g. generated with python or imagej or some other established general purpose tool). Then, instead of displaying the resulting image, you should compare the reference output and yout output (with some accuracy, esp if using floats) and return a value (e.g. bool) telling whether your operation worked as expected or not. You could then also use a testing framework, but I guess here that's unnecessary, as long as you report which tests have passed and which - failed.
+
+
+2.Having multiple classes in the same source file is not good style. Consider a folder of separate source and header files for each class (so like a folder tests with file inside TestGeometric.cpp TestGeometric.hpp TestFiltering.cpp TestGeometric.hpp
+
+
+3.Also taking a file of images and apply some transforms and save them will be very useful in for data augmentation in computer vision. Since C++ is faster than python or Matlab it may be a goal for this project.
+I will try to add more comments in the following days if I can find some!
+
+
+4.One more thing, your menus might be easier to read and edit if they were using switch and enums instead of ifs with numbers. So you would do something like enum GeometricTransformation(Resize,Rotate,FlipLeftRight,FlipUpDown);
+Then, if you wanna get fancy, you could instead of the normal enums use better enums and then all your menus would boil down to a single function that prints the name of the enum, the numbers and names of its possible values and parses them accordingly.
+
+
+5.The namespace matter
 
 
