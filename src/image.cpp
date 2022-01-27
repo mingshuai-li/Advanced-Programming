@@ -55,7 +55,7 @@ cv::Mat Image::ConvertRGB2GrayScale(const cv::Mat& input_image)
 }
 
 
-cv::Mat Image::ConvertUchar2DoubleC1(const cv::Mat& input_image)
+cv::Mat Image::ConvertUchar2DoubleC1(const cv::Mat& input_image) const
 {
 
     const int image_height = input_image.rows;
@@ -72,13 +72,13 @@ cv::Mat Image::ConvertUchar2DoubleC1(const cv::Mat& input_image)
 }
 
 
-uchar Image::MapDouble2Uchar(double n)
+uchar Image::MapDouble2Uchar(double n) const
 {
     return (n > 255.0) ? static_cast<uchar>(255) : ((n < 0.0) ? static_cast<uchar>(0) : static_cast<uchar>(n));
 }
 
 
-cv::Mat Image::Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
+cv::Mat Image::Convolve(const cv::Mat& input_image, const cv::Mat& kernel) const
 {
 
     const int image_height = input_image.rows;
@@ -133,26 +133,83 @@ cv::Mat Image::Convolve(const cv::Mat& input_image, const cv::Mat& kernel)
 }
 
 
-void Image::DisplayImage(const cv::Mat& image, const std::string& image_title)
+Image::Image(const std::string& file_name)
+{
+    input_image_ = ReadImage(file_name);
+    input_image_ = ConvertRGB2GrayScale(input_image_);
+}
+
+
+Image::Image(const Image& image)
+{
+    input_image_ = image.input_image_.clone();
+}
+
+
+Image::~Image()
+{
+}
+
+
+void Image::DisplayImage(const std::string& image_title) const
+{
+    cv::imshow(image_title, input_image_);
+    cv::waitKey(0);
+}
+
+
+void Image::DisplayImage(const cv::Mat& image, const std::string& image_title) const
 {
     cv::imshow(image_title, image);
     cv::waitKey(0);
 }
 
 
-void Image::PrintImageInfo(const cv::Mat& image)
+void Image::PrintImageInfo() const
 {
-    std::cout << "The height of the image is: " << image.rows << '\n';
-    std::cout << "The width of the image is: " << image.cols << '\n';
-    std::cout << "The number of the channels of the image is " << image.channels() << '\n';
+    std::cout << "The height of the image is: " << input_image_.rows << '\n';
+    std::cout << "The width of the image is: " << input_image_.cols << '\n';
+    std::cout << "The number of the channels of the image is " << input_image_.channels() << '\n';
 }
 
 
-cv::Mat Image::Resize(const cv::Mat& input_image, double height_scaling, double width_scaling)
+int Image::GetImageHeight() const
+{
+    return input_image_.rows;
+}
+
+
+int Image::GetImageWidth() const
+{
+    return input_image_.cols;
+}
+
+
+cv::Mat Image::GetImage() const
+{
+    cv::Mat new_image = input_image_.clone();
+    return new_image;
+}
+
+
+void Image::SetNewImage(const std::string& file_name)
+{
+    input_image_ = ReadImage(file_name);
+    input_image_ = ConvertRGB2GrayScale(input_image_);
+}
+
+
+void Image::SetNewImage(const cv::Mat& new_image)
+{
+    input_image_ = new_image;
+}
+
+
+cv::Mat Image::Resize(double height_scaling, double width_scaling) const
 {  
 
-    const int rows = cvRound(input_image.rows * height_scaling);
-    const int cols = cvRound(input_image.cols * width_scaling);
+    const int rows = cvRound(input_image_.rows * height_scaling);
+    const int cols = cvRound(input_image_.cols * width_scaling);
 
     // Makes a copy of the input image
 	cv::Mat output_image(rows, cols, CV_8UC1);
@@ -166,7 +223,7 @@ cv::Mat Image::Resize(const cv::Mat& input_image, double height_scaling, double 
         {
             x = static_cast<int>((i + 1) / height_scaling + 0.5) - 1;
             y = static_cast<int>((j + 1) / width_scaling + 0.5) - 1;
-            output_image.at<uchar>(i, j) = input_image.at<uchar>(x, y);
+            output_image.at<uchar>(i, j) = input_image_.at<uchar>(x, y);
             // changes the scale of the output image with given size
         }
     }
@@ -176,15 +233,15 @@ cv::Mat Image::Resize(const cv::Mat& input_image, double height_scaling, double 
 }
 
 
-cv::Mat Image::Rotate(const cv::Mat& input_image, double angle)
+cv::Mat Image::Rotate(double angle) const
 {
 
-    const int image_height = input_image.rows;
-    const int image_width = input_image.cols;
+    const int image_height = input_image_.rows;
+    const int image_width = input_image_.cols;
     const int half_image_height = image_height / 2;
     const int half_image_width = image_width / 2;
 
-	const int output_image_size = static_cast<int>(sqrtf(pow(input_image.rows, 2) + pow(input_image.cols, 2)) + 0.5);
+	const int output_image_size = static_cast<int>(sqrtf(pow(input_image_.rows, 2) + pow(input_image_.cols, 2)) + 0.5);
     const int half_output_size = output_image_size / 2;
 
     // Makes a copy of the input image
@@ -213,7 +270,7 @@ cv::Mat Image::Rotate(const cv::Mat& input_image, double angle)
             if (input_image_row <= 0 || input_image_row >= image_height || input_image_col <= 0 || input_image_col >= image_width)
                 output_image.at<uchar>(i, j) = static_cast<uchar>(0);
             else
-                output_image.at<uchar>(i, j) = input_image.at<uchar>(input_image_row, input_image_col);
+                output_image.at<uchar>(i, j) = input_image_.at<uchar>(input_image_row, input_image_col);
 		}
     }
 
@@ -222,11 +279,11 @@ cv::Mat Image::Rotate(const cv::Mat& input_image, double angle)
 }
 
 
-cv::Mat Image::FlipLeftRight(const cv::Mat& input_image)
+cv::Mat Image::FlipLeftRight() const
 {
 
-    const int image_height = input_image.rows;
-    const int image_width = input_image.cols;
+    const int image_height = input_image_.rows;
+    const int image_width = input_image_.cols;
 
     // Makes a copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
@@ -234,18 +291,18 @@ cv::Mat Image::FlipLeftRight(const cv::Mat& input_image)
     for (int i = 0; i < image_height; i++)
         for (int j = 0; j < image_width; j++)
             // Flips along Y axis
-            output_image.at<uchar>(i, j) = input_image.at<uchar>(i, image_width - j -1);
+            output_image.at<uchar>(i, j) = input_image_.at<uchar>(i, image_width - j -1);
 
     return output_image;
 
 }
 
 
-cv::Mat Image::FlipUpDown(const cv::Mat& input_image)
+cv::Mat Image::FlipUpDown() const
 {
 
-    const int image_height = input_image.rows;
-    const int image_width = input_image.cols;
+    const int image_height = input_image_.rows;
+    const int image_width = input_image_.cols;
 
     // Make a copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
@@ -253,18 +310,18 @@ cv::Mat Image::FlipUpDown(const cv::Mat& input_image)
     for (int i = 0; i < image_height; i++)
         for (int j = 0; j < image_width; j++)
             // Flips along X axis
-            output_image.at<uchar>(i, j) = input_image.at<uchar>(image_height - i - 1, j);
+            output_image.at<uchar>(i, j) = input_image_.at<uchar>(image_height - i - 1, j);
 
     return output_image;
 
 }
 
 
-cv::Mat Image::BrightnessTransform(const cv::Mat& input_image, double delta)
+cv::Mat Image::BrightnessTransform(double delta) const
 {
 
-    const int image_height = input_image.rows;
-    const int image_width = input_image.cols;
+    const int image_height = input_image_.rows;
+    const int image_width = input_image_.cols;
 
     // Makes an empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
@@ -276,7 +333,7 @@ cv::Mat Image::BrightnessTransform(const cv::Mat& input_image, double delta)
     {
         for (int j = 0; j < image_width; j++)
         {
-            new_value = static_cast<double>(input_image.at<uchar>(i, j)) + delta;
+            new_value = static_cast<double>(input_image_.at<uchar>(i, j)) + delta;
             output_image.at<uchar>(i, j) = MapDouble2Uchar(new_value);
             // Adds a constant to each pixel's value
         }
@@ -287,11 +344,11 @@ cv::Mat Image::BrightnessTransform(const cv::Mat& input_image, double delta)
 }
 
 
-cv::Mat Image::InverseTransform(const cv::Mat& input_image)
+cv::Mat Image::InverseTransform() const
 {
 
-    const int image_height = input_image.rows;
-    const int image_width = input_image.cols;
+    const int image_height = input_image_.rows;
+    const int image_width = input_image_.cols;
 
     // Makes an empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
@@ -299,7 +356,7 @@ cv::Mat Image::InverseTransform(const cv::Mat& input_image)
     // Loops over all pixels' intensities
     for (int i = 0; i < image_height; i++)
         for (int j = 0; j < image_width; j++)
-            output_image.at<uchar>(i, j) = 255 - input_image.at<uchar>(i, j);
+            output_image.at<uchar>(i, j) = 255 - input_image_.at<uchar>(i, j);
             // Each pixel's value is subtracted by 255
 
     return output_image;
@@ -307,11 +364,11 @@ cv::Mat Image::InverseTransform(const cv::Mat& input_image)
 }
 
 
-cv::Mat Image::GammaTransform(const cv::Mat& input_image, double coefficient_a, double exponent_alpha)
+cv::Mat Image::GammaTransform(double coefficient_a, double exponent_alpha) const
 {
 
-    const int image_height = input_image.rows;
-    const int image_width = input_image.cols;
+    const int image_height = input_image_.rows;
+    const int image_width = input_image_.cols;
 
     // Makes an empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
@@ -322,7 +379,7 @@ cv::Mat Image::GammaTransform(const cv::Mat& input_image, double coefficient_a, 
     {
         for (int j = 0; j < image_width; j++)
         {
-            new_value = coefficient_a * pow(static_cast<double>(input_image.at<uchar>(i, j)), exponent_alpha);
+            new_value = coefficient_a * pow(static_cast<double>(input_image_.at<uchar>(i, j)), exponent_alpha);
             output_image.at<uchar>(i, j) = MapDouble2Uchar(new_value);
             // output_image = a * input_image^alpha
         }
@@ -333,11 +390,11 @@ cv::Mat Image::GammaTransform(const cv::Mat& input_image, double coefficient_a, 
 }
 
 
-cv::Mat Image::LogTransform(const cv::Mat& input_image, double coefficient_a)
+cv::Mat Image::LogTransform(double coefficient_a) const
 {
 
-    const int image_height = input_image.rows;
-    const int image_width = input_image.cols;
+    const int image_height = input_image_.rows;
+    const int image_width = input_image_.cols;
 
     // Makes an empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
@@ -348,7 +405,7 @@ cv::Mat Image::LogTransform(const cv::Mat& input_image, double coefficient_a)
     {
         for (int j = 0; j < image_width; j++)
         {
-            new_value = coefficient_a * log(static_cast<double>(input_image.at<uchar>(i, j)) + 1);
+            new_value = coefficient_a * log(static_cast<double>(input_image_.at<uchar>(i, j)) + 1);
             output_image.at<uchar>(i, j) = MapDouble2Uchar(new_value);
             // output_image = a * log(1 + input_image) 
         }
@@ -359,11 +416,11 @@ cv::Mat Image::LogTransform(const cv::Mat& input_image, double coefficient_a)
 }
 
 
-cv::Mat Image::NormalizationTransform(const cv::Mat& input_image, double lower_threshold, double upper_threshold)
+cv::Mat Image::NormalizationTransform(double lower_threshold, double upper_threshold) const
 {
 
-    const int image_height = input_image.rows;
-    const int image_width = input_image.cols;
+    const int image_height = input_image_.rows;
+    const int image_width = input_image_.cols;
 
     // Makes an empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
@@ -379,10 +436,10 @@ cv::Mat Image::NormalizationTransform(const cv::Mat& input_image, double lower_t
         {
             for (int j = 0; j < image_width; j++)
             {
-                if (static_cast<double>(input_image.at<uchar>(i, j)) > upper_threshold)
+                if (static_cast<double>(input_image_.at<uchar>(i, j)) > upper_threshold)
                     output_image.at<uchar>(i, j) = static_cast<uchar>(255);
-                else if (static_cast<double>(input_image.at<uchar>(i, j)) >= lower_threshold)
-                    output_image.at<uchar>(i, j) = static_cast<uchar>(k * input_image.at<uchar>(i, j) + b);
+                else if (static_cast<double>(input_image_.at<uchar>(i, j)) >= lower_threshold)
+                    output_image.at<uchar>(i, j) = static_cast<uchar>(k * input_image_.at<uchar>(i, j) + b);
                 // Modifies the intensity values of pixels to make the image more appealing to the senses
             }
         }
@@ -393,19 +450,19 @@ cv::Mat Image::NormalizationTransform(const cv::Mat& input_image, double lower_t
 }
 
 
-cv::Mat Image::ThresholdTransform(const cv::Mat& input_image, double threshold)
+cv::Mat Image::ThresholdTransform(double threshold) const
 {
 
-    const int image_height = input_image.rows;
-    const int image_width = input_image.cols;
+    const int image_height = input_image_.rows;
+    const int image_width = input_image_.cols;
 
     // Makes an empty copy of the input image
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
     // Loops over all pixels' intensities
     for (int i = 0; i < image_height; i++)
         for (int j = 0; j < image_width; j++)
-            if (static_cast<double>(input_image.at<uchar>(i, j)) >= threshold)
-                output_image.at<uchar>(i, j) = input_image.at<uchar>(i, j);
+            if (static_cast<double>(input_image_.at<uchar>(i, j)) >= threshold)
+                output_image.at<uchar>(i, j) = input_image_.at<uchar>(i, j);
             // If the pixel value is less than threshold, it is set to zero, otherwise it remains.
 
     return output_image;
@@ -413,11 +470,11 @@ cv::Mat Image::ThresholdTransform(const cv::Mat& input_image, double threshold)
 }
 
 
-cv::Mat Image::WindowTransform(const cv::Mat& input_image, double lower_threshold, double upper_threshold)
+cv::Mat Image::WindowTransform(double lower_threshold, double upper_threshold) const
 {
 
-    const int image_height = input_image.rows;
-    const int image_width = input_image.cols;
+    const int image_height = input_image_.rows;
+    const int image_width = input_image_.cols;
 
     cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
     // Makes an empty copy of the input image
@@ -428,8 +485,8 @@ cv::Mat Image::WindowTransform(const cv::Mat& input_image, double lower_threshol
         // Loops over all pixels' intensities
         for (int i = 0; i < image_height; i++)
             for (int j = 0; j < image_width; j++)
-                if ((static_cast<double>(input_image.at<uchar>(i, j)) >= lower_threshold) && (static_cast<double>(input_image.at<uchar>(i, j)) <= upper_threshold))
-                    output_image.at<uchar>(i, j) = input_image.at<uchar>(i, j);
+                if ((static_cast<double>(input_image_.at<uchar>(i, j)) >= lower_threshold) && (static_cast<double>(input_image_.at<uchar>(i, j)) <= upper_threshold))
+                    output_image.at<uchar>(i, j) = input_image_.at<uchar>(i, j);
                 // Keeps the pixels' values between the range defined by lower_threshold and upper_threshold, sets others to zero
     }
 
@@ -438,7 +495,7 @@ cv::Mat Image::WindowTransform(const cv::Mat& input_image, double lower_threshol
 }
 
 
-cv::Mat Image::LowPassFilter(const cv::Mat& input_image, int kernel_height, int kernel_width)
+cv::Mat Image::LowPassFilter(int kernel_height, int kernel_width) const
 {
 
     cv::Mat kernel = cv::Mat::ones(kernel_height, kernel_width, CV_64FC1);
@@ -450,14 +507,14 @@ cv::Mat Image::LowPassFilter(const cv::Mat& input_image, int kernel_height, int 
             kernel.at<double>(i, j) *= kernel_coefficient;
     
     // Performs the convolution
-    cv::Mat output_image = Convolve(input_image, kernel);
+    cv::Mat output_image = Convolve(input_image_, kernel);
 
     return output_image;
 
 }
 
 
-cv::Mat Image::HighPassFilter(const cv::Mat& input_image)
+cv::Mat Image::HighPassFilter() const
 {
 
     // Computes the kernel for computing the image's gradients in the height direction
@@ -471,11 +528,11 @@ cv::Mat Image::HighPassFilter(const cv::Mat& input_image)
     kernel_width.at<double>(0, 2) = -1.0; kernel_width.at<double>(1, 2) = -2.0; kernel_width.at<double>(2, 2) = -1.0;
 
     // Performs the convolution
-    cv::Mat d_height = Convolve(input_image, kernel_height);
-    cv::Mat d_width = Convolve(input_image, kernel_width);
+    cv::Mat d_height = Convolve(input_image_, kernel_height);
+    cv::Mat d_width = Convolve(input_image_, kernel_width);
 
-    const int image_height = input_image.rows;
-    const int image_width = input_image.cols;
+    const int image_height = input_image_.rows;
+    const int image_width = input_image_.cols;
 
     // Computes the gradient magnitudes at each pixel's position
     cv::Mat gradient_magnitude = cv::Mat::zeros(image_height, image_width, CV_64FC1);
@@ -512,13 +569,13 @@ cv::Mat Image::HighPassFilter(const cv::Mat& input_image)
 }
 
 
-cv::Mat Image::BandPassFilter(const cv::Mat& input_image, double central_freq, double band_width)
+cv::Mat Image::BandPassFilter(double central_freq, double band_width) const
 {
 
-    const int image_height = input_image.rows;
-    const int image_width = input_image.cols;
+    const int image_height = input_image_.rows;
+    const int image_width = input_image_.cols;
 
-    cv::Mat input_image_double = ConvertUchar2DoubleC1(input_image); 
+    cv::Mat input_image_double = ConvertUchar2DoubleC1(input_image_); 
 
     cv::Mat frequency_domain_image = cv::Mat::zeros(image_height, image_width, CV_64FC1);
 
@@ -553,7 +610,7 @@ cv::Mat Image::BandPassFilter(const cv::Mat& input_image, double central_freq, d
 }
 
 
-cv::Mat Image::GaussianFilter(const cv::Mat& input_image, int kernel_height, int kernel_width, double kernel_sigma)
+cv::Mat Image::GaussianFilter(int kernel_height, int kernel_width, double kernel_sigma) const
 {
 
     cv::Mat kernel = cv::Mat::zeros(kernel_height, kernel_width, CV_64FC1);
@@ -591,14 +648,14 @@ cv::Mat Image::GaussianFilter(const cv::Mat& input_image, int kernel_height, int
             kernel.at<double>(i, j) /= sum;
     
     // Performs the convolution
-    cv::Mat output_image = Convolve(input_image, kernel);
+    cv::Mat output_image = Convolve(input_image_, kernel);
 
     return output_image;
 
 }
 
 
-cv::Mat Image::LaplacianFilter(const cv::Mat& input_image)
+cv::Mat Image::LaplacianFilter() const
 {
 
     // Computes the Laplacian Kernel
@@ -608,7 +665,7 @@ cv::Mat Image::LaplacianFilter(const cv::Mat& input_image)
     kernel.at<double>(1, 1) = 4.0;
 
     // Computes the convolution
-    cv::Mat output_image = Convolve(input_image, kernel);
+    cv::Mat output_image = Convolve(input_image_, kernel);
 
     return output_image;
 
