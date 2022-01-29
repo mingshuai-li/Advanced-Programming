@@ -4,7 +4,7 @@
   * Author:         Zichen Zhang, Mingshuai Li
   * Version:        V3.00
   * Date:           2022.1.29
-  * Description:    The header file for the various unit test classes
+  * Description:    The header file for the class UnitTest
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
@@ -15,37 +15,19 @@
 
 
 #include <memory>
-#include "image_io.hpp"
-#include "image_type_conversion.hpp"
-#include "image_enhancement.hpp"
-#include "geometric_transform.hpp"
-#include "filtering.hpp"
+#include "image.hpp"
 
 
-class UnitTestIoAndTypeConversion
+class UnitTest
 {
 
-    public:
-        std::unique_ptr<ImageIO> image_io_;
-        cv::Mat input_image_;
-        cv::Mat output_image_;
+    private:
+        std::unique_ptr<Image> image_;
 
         /*
-        * The constructor
-        * @ Parameter:
-        *       file_name:    The file name of the input image
+        * Tests the ReadImage()
         */
-        UnitTestIoAndTypeConversion(const std::string& file_name);
-
-        /*
-        * The destructor
-        */
-        ~UnitTestIoAndTypeConversion();
-
-        /*
-        * Tests the ReadImage(), the DisplayImage() and the PrintImageInfo()
-        */
-        void TestImageIO();
+        void TestReadImage();
 
         /*
         * Tests the ConvertRGB2GrayScale()
@@ -62,29 +44,40 @@ class UnitTestIoAndTypeConversion
         */
         void TestMapDouble2Uchar();
 
-};
-
-
-class UnitTestImageEnhancement 
-{
-
-    public:
-        std::unique_ptr<ImageIO> image_io_;
-        cv::Mat input_image_;
-        cv::Mat output_image_;
-        std::unique_ptr<ImageEnhancement> image_enhancement_;
+        /*
+        * Tests the Convolve()
+        */
+        void TestConvolve();
 
         /*
-        * The constructor
-        * @ Parameter:
-        *       file_name:    The file name of the input image
+        * Tests the GetImageHeight()
         */
-        UnitTestImageEnhancement(const std::string& file_name);
+        void TestGetImageHeight();
 
         /*
-        * The destructor
+        * Tests the GetImageWidth()
         */
-        ~UnitTestImageEnhancement();
+        void TestGetImageWidth();
+
+        /*
+        * Tests the Resize()
+        */
+        void TestResize();
+
+        /*
+        * Tests the Rotate()
+        */
+        void TestRotate();
+
+        /*
+        * Tests the FlipLeftRight()
+        */
+        void TestFlipLeftRight();
+
+        /*
+        * Tests the FlipUpDown()
+        */
+        void TestFlipUpDown();
 
         /*
         * Tests the BrightnessTransform()
@@ -120,78 +113,6 @@ class UnitTestImageEnhancement
         * Tests the WindowTransform()
         */
         void TestWindowTransform();
-     
-};
-
-
-class UnitTestGeometricTransform 
-{
-
-    public:
-        std::unique_ptr<ImageIO> image_io_;
-        cv::Mat input_image_;
-        cv::Mat output_image_;
-        std::unique_ptr<GeometricTransform> geometric_transform_;
-
-        /*
-        * The constructor
-        * @ Parameter:
-        *       file_name:    The file name of the input image
-        */
-        UnitTestGeometricTransform(const std::string& file_name);
-
-        /*
-        * The destructor
-        */
-        ~UnitTestGeometricTransform();
-
-        /*
-        * Tests the Resize()
-        */
-        void TestResize();
-
-        /*
-        * Tests the Rotate()
-        */
-        void TestRotate();
-
-        /*
-        * Tests the FlipLeftRight()
-        */
-        void TestFlipLeftRight();
-
-        /*
-        * Tests the FlipUpDown()
-        */
-        void TestFlipUpDown();
-
-};
-
-
-class UnitTestFiltering 
-{
-    public:
-        std::unique_ptr<ImageIO> image_io_;
-        cv::Mat input_image_;
-        cv::Mat output_image_;
-        std::unique_ptr<Filtering> filtering_;
-
-        /*
-        * The constructor
-        * @ Parameter:
-        *       file_name:    The file name of the input image
-        */
-        UnitTestFiltering(const std::string& file_name);
-
-        /*
-        * The destructor
-        */
-        ~UnitTestFiltering();
-
-        /*
-        * Tests the Convolve()
-        */
-        void TestConvolve();
 
         /*
         * Tests the LowPassFilter()
@@ -217,7 +138,17 @@ class UnitTestFiltering
         * Tests the LaplacianFilter()
         */
         void TestLaplacianFilter();
+    
+    public:
+        /*
+        * The constructor
+        */
+        UnitTest();
 
+        /*
+        * The destructor
+        */
+        ~UnitTest();
 };
 
 
