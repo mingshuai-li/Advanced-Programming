@@ -86,23 +86,17 @@ The version will be considered as "complete" if
 - CMake is added.
 
 ### TO DO LIST
-0.CMake
+1.CMake
 
 
-1.Unit tests aren't really tests if they're not testing anything automatically. Ideally, you should have reference output images for each process you want to test (e.g. generated with python or imagej or some other established general purpose tool). Then, instead of displaying the resulting image, you should compare the reference output and yout output (with some accuracy, esp if using floats) and return a value (e.g. bool) telling whether your operation worked as expected or not. You could then also use a testing framework, but I guess here that's unnecessary, as long as you report which tests have passed and which - failed.
+2.Unit tests aren't really tests if they're not testing anything automatically. Ideally, you should have reference output images for each process you want to test (e.g. generated with python or imagej or some other established general purpose tool). Then, instead of displaying the resulting image, you should compare the reference output and yout output (with some accuracy, esp if using floats) and return a value (e.g. bool) telling whether your operation worked as expected or not. You could then also use a testing framework, but I guess here that's unnecessary, as long as you report which tests have passed and which - failed.
 
 
-2.Having multiple classes in the same source file is not good style. Consider a folder of separate source and header files for each class (so like a folder tests with file inside TestGeometric.cpp TestGeometric.hpp TestFiltering.cpp TestGeometric.hpp
+3.Having multiple classes in the same source file is not good style. Consider a folder of separate source and header files for each class (so like a folder tests with file inside TestGeometric.cpp TestGeometric.hpp TestFiltering.cpp TestGeometric.hpp
 
 
-3.Also taking a file of images and apply some transforms and save them will be very useful in for data augmentation in computer vision. Since C++ is faster than python or Matlab it may be a goal for this project.
-I will try to add more comments in the following days if I can find some!
+4.The namespace matter
 
 
-4.One more thing, your menus might be easier to read and edit if they were using switch and enums instead of ifs with numbers. So you would do something like enum GeometricTransformation(Resize,Rotate,FlipLeftRight,FlipUpDown);
-Then, if you wanna get fancy, you could instead of the normal enums use better enums and then all your menus would boil down to a single function that prints the name of the enum, the numbers and names of its possible values and parses them accordingly.
-
-
-5.The namespace matter
-
+5.Convolve
 
