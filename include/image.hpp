@@ -143,6 +143,13 @@ class Image
         cv::Mat GetImage() const;
 
         /*
+        * Saves the image as a file
+        * @ Parameter:
+        *       file_path: The path of the image file
+        */
+        void SaveImage(const std::string& file_path) const;
+
+        /*
         * Sets a new image
         * @ Parameter:
         *       file_name:      The file name of the input image
