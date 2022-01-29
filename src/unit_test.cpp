@@ -2,9 +2,9 @@
  
   * FileName:       unit_test.cpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V2.00
-  * Date:           2021.12.23
-  * Description:    The implementation for the various unit test classes
+  * Version:        V3.00
+  * Date:           2022.1.29
+  * Description:    The implementation for the class UnitTest
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
@@ -13,23 +13,7 @@
 #include "unit_test.hpp"
 
 
-UnitTestIoAndTypeConversion::UnitTestIoAndTypeConversion(const std::string& file_name)
-{
-
-    image_io_ = std::make_unique<ImageIO>();
-
-    input_image_ = image_io_->ReadImage(file_name);
-    output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
-
-}
-
-
-UnitTestIoAndTypeConversion::~UnitTestIoAndTypeConversion()
-{
-}
-
-
-void UnitTestIoAndTypeConversion::TestImageIO()
+void UnitTest::TestReadImage()
 {
 
     image_io_->DisplayImage(input_image_, "The Current Input Image");
@@ -38,7 +22,7 @@ void UnitTestIoAndTypeConversion::TestImageIO()
 }
 
 
-void UnitTestIoAndTypeConversion::TestConvertRGB2GrayScale()
+void UnitTest::TestConvertRGB2GrayScale()
 {
 
     output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
@@ -47,7 +31,7 @@ void UnitTestIoAndTypeConversion::TestConvertRGB2GrayScale()
 }
 
 
-void UnitTestIoAndTypeConversion::TestConvertUchar2DoubleC1()
+void UnitTest::TestConvertUchar2DoubleC1()
 {
 
     output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
@@ -58,7 +42,7 @@ void UnitTestIoAndTypeConversion::TestConvertUchar2DoubleC1()
 }
 
 
-void UnitTestIoAndTypeConversion::TestMapDouble2Uchar()
+void UnitTest::TestMapDouble2Uchar()
 {
 
     double n1 = 256.0;
@@ -73,174 +57,7 @@ void UnitTestIoAndTypeConversion::TestMapDouble2Uchar()
 }
 
 
-UnitTestImageEnhancement::UnitTestImageEnhancement(const std::string& file_name)
-{
-
-    image_io_ = std::make_unique<ImageIO>();
-    
-    input_image_ = image_io_->ReadImage(file_name);
-    
-    output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
-
-    image_enhancement_  = std::make_unique<ImageEnhancement>();
-
-}
-
-
-UnitTestImageEnhancement::~UnitTestImageEnhancement()
-{
-}
-
-
-void UnitTestImageEnhancement::TestBrightnessTransform()
-{
-
-    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
-    output_image_ = image_enhancement_->BrightnessTransform(output_image_, 30);
-    image_io_->DisplayImage(output_image_, "The Current Output Image");
-
-}
-
-
-void UnitTestImageEnhancement::TestInverseTransform()
-{
-
-    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
-    output_image_ = image_enhancement_->InverseTransform(output_image_);
-    image_io_->DisplayImage(output_image_, "The Current Output Image");
-
-}
-
-
-void UnitTestImageEnhancement::TestGammaTransform()
-{
-
-    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
-    output_image_ = image_enhancement_->GammaTransform(output_image_, 1, 0.4);
-    image_io_->DisplayImage(output_image_, "The Current Output Image");
-
-}
-
-
-void UnitTestImageEnhancement::TestLogTransform()
-{
-
-    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
-    output_image_ = image_enhancement_->LogTransform(output_image_, 1.2);
-    image_io_->DisplayImage(output_image_, "The Current Output Image");
-
-}
-
-
-void UnitTestImageEnhancement::TestNormalizationTransform()
-{
-
-    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
-    output_image_ = image_enhancement_->NormalizationTransform(output_image_, 100, 150);
-    image_io_->DisplayImage(output_image_, "The Current Output Image");
-
-}
-
-
-void UnitTestImageEnhancement::TestThresholdTransform()
-{
-
-    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
-    output_image_ = image_enhancement_->ThresholdTransform(output_image_, 100);
-    image_io_->DisplayImage(output_image_, "The Current Output Image");
-
-}
-
-
-void UnitTestImageEnhancement::TestWindowTransform()
-{
-
-    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
-    output_image_ = image_enhancement_->WindowTransform(output_image_, 100, 150);
-    image_io_->DisplayImage(output_image_, "The Current Output Image");
-
-}
-
-
-UnitTestGeometricTransform::UnitTestGeometricTransform(const std::string& file_name)
-{
-
-    image_io_ = std::make_unique<ImageIO>();
-    
-    input_image_ = image_io_->ReadImage(file_name);
-    
-    output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
-
-    geometric_transform_ = std::make_unique<GeometricTransform>();
-
-}
-
-
-UnitTestGeometricTransform::~UnitTestGeometricTransform()
-{
-}
-
-
-void UnitTestGeometricTransform::TestResize()
-{
-
-    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
-    output_image_ = geometric_transform_->Resize(output_image_, 0.5, 0.5);
-    image_io_->DisplayImage(output_image_, "The Current Output Image");
-
-}
-
-
-void UnitTestGeometricTransform::TestRotate()
-{
-
-    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
-    output_image_ = geometric_transform_->Rotate(output_image_, 45);
-    image_io_->DisplayImage(output_image_, "The Current Output Image");
-
-}
-
-
-void UnitTestGeometricTransform::TestFlipLeftRight()
-{
-
-    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
-    output_image_ = geometric_transform_->FlipLeftRight(output_image_);
-    image_io_->DisplayImage(output_image_, "The Current Output Image");
-
-}
-
-
-void UnitTestGeometricTransform::TestFlipUpDown()
-{
-
-    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
-    output_image_ = geometric_transform_->FlipUpDown(output_image_);
-    image_io_->DisplayImage(output_image_, "The Current Output Image");
-
-}
-
-
-UnitTestFiltering::UnitTestFiltering(const std::string& file_name)
-{
-
-    image_io_ = std::make_unique<ImageIO>();
-    
-    input_image_ = image_io_->ReadImage(file_name);
-    
-    output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
-
-    filtering_ = std::make_unique<Filtering>();
-
-}
-
-
-UnitTestFiltering::~UnitTestFiltering()
-{
-}
-
-
-void UnitTestFiltering::TestConvolve()
+void UnitTest::TestConvolve()
 {
 
     cv::Mat kernel = cv::Mat::ones(3, 3, CV_64FC1);
@@ -255,7 +72,127 @@ void UnitTestFiltering::TestConvolve()
 }
 
 
-void UnitTestFiltering::TestLowPassFilter()
+void UnitTest::TestGetImageHeight()
+{
+}
+
+
+void UnitTest::TestGetImageWidth()
+{
+}
+
+
+void UnitTest::TestResize()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = geometric_transform_->Resize(output_image_, 0.5, 0.5);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTest::TestRotate()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = geometric_transform_->Rotate(output_image_, 45);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTest::TestFlipLeftRight()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = geometric_transform_->FlipLeftRight(output_image_);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTest::TestFlipUpDown()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = geometric_transform_->FlipUpDown(output_image_);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTest::TestBrightnessTransform()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->BrightnessTransform(output_image_, 30);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTest::TestInverseTransform()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->InverseTransform(output_image_);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTest::TestGammaTransform()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->GammaTransform(output_image_, 1, 0.4);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTest::TestLogTransform()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->LogTransform(output_image_, 1.2);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTest::TestNormalizationTransform()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->NormalizationTransform(output_image_, 100, 150);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTest::TestThresholdTransform()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->ThresholdTransform(output_image_, 100);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTest::TestWindowTransform()
+{
+
+    output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    output_image_ = image_enhancement_->WindowTransform(output_image_, 100, 150);
+    image_io_->DisplayImage(output_image_, "The Current Output Image");
+
+}
+
+
+void UnitTest::TestLowPassFilter()
 {
 
     output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
@@ -265,7 +202,7 @@ void UnitTestFiltering::TestLowPassFilter()
 }
 
 
-void UnitTestFiltering::TestHighPassFilter()
+void UnitTest::TestHighPassFilter()
 {
 
     output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
@@ -275,7 +212,7 @@ void UnitTestFiltering::TestHighPassFilter()
 }
 
 
-void UnitTestFiltering::TestBandPassFilter()
+void UnitTest::TestBandPassFilter()
 {
 
     output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
@@ -285,7 +222,7 @@ void UnitTestFiltering::TestBandPassFilter()
 }
 
 
-void UnitTestFiltering::TestGaussianFilter()
+void UnitTest::TestGaussianFilter()
 {
 
     output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
@@ -295,7 +232,7 @@ void UnitTestFiltering::TestGaussianFilter()
 }
 
 
-void UnitTestFiltering::TestLaplacianFilter()
+void UnitTest::TestLaplacianFilter()
 {
 
     output_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
@@ -303,5 +240,19 @@ void UnitTestFiltering::TestLaplacianFilter()
     image_io_->DisplayImage(output_image_, "The Current Output Image");
 
 }
+
+
+UnitTest::UnitTest()
+{
+    image_ = std::make_unique<Image>("../NewYork.jpg");
+}
+
+
+UnitTest::~UnitTest()
+{
+}
+
+
+
 
 
