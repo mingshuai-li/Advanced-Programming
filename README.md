@@ -92,11 +92,11 @@ The version will be considered as "complete" if
 2.Unit tests aren't really tests if they're not testing anything automatically. Ideally, you should have reference output images for each process you want to test (e.g. generated with python or imagej or some other established general purpose tool). Then, instead of displaying the resulting image, you should compare the reference output and yout output (with some accuracy, esp if using floats) and return a value (e.g. bool) telling whether your operation worked as expected or not. You could then also use a testing framework, but I guess here that's unnecessary, as long as you report which tests have passed and which - failed.
 
 
-3.Having multiple classes in the same source file is not good style. Consider a folder of separate source and header files for each class (so like a folder tests with file inside TestGeometric.cpp TestGeometric.hpp TestFiltering.cpp TestGeometric.hpp
+3.The namespace matter
 
 
-4.The namespace matter
+4.Refine Convolve()
 
 
-5.Convolve
+5.Measure performance?
 
