@@ -29,18 +29,18 @@ class Menu
         int MainMenu();
 
         /*
-        * Displays the image enhancement section menu
-        * @ Return:
-        *                       The users' choice
-        */
-        int ImageEnhancementMenu();
-
-        /*
         * Displays the geometric transform section menu
         * @ Return:
         *                       The users' choice
         */
         int GeometricTransformMenu();
+
+        /*
+        * Displays the image enhancement section menu
+        * @ Return:
+        *                       The users' choice
+        */
+        int ImageEnhancementMenu();
 
         /*
         * Displays the filtering section menu
