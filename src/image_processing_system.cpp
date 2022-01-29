@@ -10,7 +10,7 @@
 **********************************************************************************/
 
 
-#include "image_processing_system.hpp"
+#include "../include/image_processing_system.hpp"
 
 
 void ImageProcessingSystem::RunGeometricTransform()
