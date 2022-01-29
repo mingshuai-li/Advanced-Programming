@@ -19,6 +19,13 @@
 #include "menu.hpp"
 
 
+enum GeometricTransform {Resize = 1, Rotate, FlipLeftRight, FlippUpDown};
+
+enum ImageEnhancement {Brightness = 1, Inverse, Gamma, Log, Normalization, Threshold, Window};
+
+enum Filtering {LowPass = 1, HighPass, BandPass, Gaussian, Laplacian};
+
+
 class ImageProcessingSystem
 {
 
@@ -28,14 +35,14 @@ class ImageProcessingSystem
         cv::Mat output_image_;
 
         /*
-        * Runs the image enhancement section of the system
-        */
-        void RunImageEnhancement();
-
-        /*
         * Runs the geometric transform section of the system
         */
         void RunGeometricTransform();
+
+        /*
+        * Runs the image enhancement section of the system
+        */
+        void RunImageEnhancement();
 
         /*
         * Runs the filtering section of the system
@@ -68,6 +75,11 @@ class ImageProcessingSystem
         * Displays the current input image in the system
         */
         void DisplayCurrentOutputImage() const;
+
+        /*
+        * Saves the output image as a file
+        */
+        void SaveOutputImage() const;
     
     public:
         /*
