@@ -133,10 +133,67 @@ cv::Mat Image::Convolve(const cv::Mat& input_image, const cv::Mat& kernel) const
 }
 
 
+cv::Mat Image::RefinedConvolve(const cv::Mat& input_image, const cv::Mat& kernel) const
+{
+
+    const int image_height = input_image.rows;
+    const int image_width = input_image.cols;
+    const int kernel_height = kernel.rows;
+    const int kernel_width = kernel.cols;
+    const int half_kh = kernel_height / 2;
+    const int half_kw = kernel_width / 2;
+
+    // Flips the kernel twice, once left-right and once up-down
+    cv::Mat flipped_kernel = cv::Mat::zeros(kernel_height, kernel_width, CV_64FC1);
+
+    for (int i = 0; i < kernel_height; i++)
+        for (int j = 0; j < kernel_width; j++)
+            flipped_kernel.at<double>(i, j) = kernel.at<double>(kernel_height - i - 1, kernel_width - j - 1);
+
+    // Pads the image so that the convolution computation won't met the edge problems
+    cv::Mat padded_image = cv::Mat::zeros(image_height + 2 * half_kh, image_width + 2 * half_kw, CV_8UC1);
+
+    for (int i = 0; i < image_height; i++)
+        for (int j = 0; j < image_width; j++)
+            padded_image.at<uchar>(i + half_kh, j + half_kw) = input_image.at<uchar>(i, j);
+    
+    cv::Mat output_image = cv::Mat::zeros(image_height, image_width, CV_8UC1);
+
+    int padded_i = 0;
+    int padded_j = 0;
+    double weighted_sum = 0.0;
+
+    for (int i = 0; i < image_height; i++)
+    {
+        for (int j = 0; j < image_width; j++)
+        {
+            weighted_sum = 0.0;
+            padded_i = i + half_kh;
+            padded_j = j + half_kw;
+            for (int oh = -half_kh; oh <= half_kh; oh++)
+                for (int ow = -half_kw; ow <= half_kw; ow++)
+                    weighted_sum += padded_image.at<uchar>(padded_i + oh, padded_j + ow) * flipped_kernel.at<double>(half_kh + oh, half_kw + ow);
+            
+            weighted_sum = MapDouble2Uchar(weighted_sum);
+            output_image.at<uchar>(i, j) = weighted_sum;
+        }
+    }
+
+    return output_image;
+
+}
+
+
 Image::Image(const std::string& file_name)
 {
     input_image_ = ReadImage(file_name);
     input_image_ = ConvertRGB2GrayScale(input_image_);
+}
+
+
+Image::Image(const cv::Mat& image)
+{
+    input_image_ = image.clone();
 }
 
 
