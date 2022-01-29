@@ -11,7 +11,7 @@
 
 
 #ifndef UNIT_TEST_H
-#define UNOT_TEST_H
+#define UNIT_TEST_H
 
 
 #include <memory>
@@ -23,21 +23,6 @@ class UnitTest
 
     private:
         std::unique_ptr<Image> image_;
-
-        /*
-        * Tests the ReadImage()
-        */
-        void TestReadImage();
-
-        /*
-        * Tests the ConvertRGB2GrayScale()
-        */
-        void TestConvertRGB2GrayScale();
-
-        /*
-        * Tests the ConvertUchar2DoubleC1()
-        */
-        void TestConvertUchar2DoubleC1();
 
         /*
         * Tests MapDouble2Uchar()
