@@ -192,6 +192,12 @@ cv::Mat Image::GetImage() const
 }
 
 
+void Image::SaveImage(const std::string& file_path) const
+{
+    cv::imwrite(file_path, input_image_);
+}
+
+
 void Image::SetNewImage(const std::string& file_name)
 {
     input_image_ = ReadImage(file_name);
