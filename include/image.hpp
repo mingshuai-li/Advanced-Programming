@@ -26,6 +26,7 @@ class Image
         cv::Mat input_image_;
         static const double PI_;
         static const double NATURAL_CONSTANT_;
+        friend class UnitTest;
 
         /*
         * Reads the image and returns the corresponding data structure
@@ -80,6 +81,16 @@ class Image
         *                       The output image
         */
         cv::Mat Convolve(const cv::Mat& input_image, const cv::Mat& kernel) const;
+
+        /*
+        * Performs the refined convolution utilizing the input image and the kernel
+        * @ Parameter:
+        *       input_image:    The input image reference
+        *       kernel:         The kernel
+        * @ Return:
+        *                       The output image
+        */
+        cv::Mat RefinedConvolve(const cv::Mat& input_image, const cv::Mat& kernel) const;
     
     public:
         /*
@@ -88,6 +99,13 @@ class Image
         *       file_name:      The file name of the input image
         */
         Image(const std::string& file_name);
+
+        /*
+        * The constructor
+        * @ Parameter:
+        *       image:          The input image reference
+        */
+        Image(const cv::Mat& image);
 
         /*
         * The copy constructor
