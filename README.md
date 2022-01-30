@@ -19,19 +19,6 @@ Basic types of operations on images:
 Don't use classes. Functions are sufficient.
 
 
-### When compiling the files, please remember to add "pkg-config --cflags --libs opencv"
-
-### To install and setup OpenCV, you need a lot of dependencies as follows.
-### "sudo apt install build-essential cmake git pkg-config libgtk-3-dev \
-    libavcodec-dev libavformat-dev libswscale-dev libv4l-dev \
-    libxvidcore-dev libx264-dev libjpeg-dev libpng-dev libtiff-dev \
-    gfortran openexr libatlas-base-dev python3-dev python3-numpy \
-    libtbb2 libtbb-dev libdc1394-22-dev libopenexr-dev \
-    libgstreamer-plugins-base1.0-dev libgstreamer1.0-dev\
-\
-### If you still meet some specific problems, please look up solutions using Google
-
-
 **Sprint 1: Definition of "done"**
 
 The version will be considered as "complete" if 
@@ -88,15 +75,6 @@ The version will be considered as "complete" if
 ### TO DO LIST
 1.CMake
 
+2.Measure performance?
 
-2.Unit tests aren't really tests if they're not testing anything automatically. Ideally, you should have reference output images for each process you want to test (e.g. generated with python or imagej or some other established general purpose tool). Then, instead of displaying the resulting image, you should compare the reference output and yout output (with some accuracy, esp if using floats) and return a value (e.g. bool) telling whether your operation worked as expected or not. You could then also use a testing framework, but I guess here that's unnecessary, as long as you report which tests have passed and which - failed.
-
-
-3.The namespace matter
-
-
-4.Refine Convolve()
-
-
-5.Measure performance?
 
