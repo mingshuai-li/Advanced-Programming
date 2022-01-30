@@ -3,7 +3,7 @@
   * FileName:       image.hpp
   * Author:         Zichen Zhang, Mingshuai Li
   * Version:        V3.00
-  * Date:           2022.1.29
+  * Date:           2022.2.1
   * Description:    The header file for the class Image
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
