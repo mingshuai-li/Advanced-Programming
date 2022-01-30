@@ -2,8 +2,8 @@
  
   * FileName:       menu.cpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V2.00
-  * Date:           2021.12.23
+  * Version:        V3.00
+  * Date:           2022.2.1
   * Description:    The implementation for the class Menu
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
@@ -18,7 +18,7 @@ int Menu::MainMenu()
 
     int choice = 0;
 
-    std::cout << "Welcome to use this image processing system(Version 2.00)!\n";
+    std::cout << "Welcome to use this image processing system(Version 3.00)!\n";
     std::cout << "Which kind of operations would you like to perform?\n";
     std::cout << "1.Image Geometric Transform\n2.Image Enhancement\n3.Filtering\n4.Update Input Image\n";
     std::cout << "5.Display Current Input Image\n6.Display Current Output Image\n7.Save Current Output Image\n8.Get Current Output Image and Quit\n";
