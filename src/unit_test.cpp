@@ -3,14 +3,14 @@
   * FileName:       unit_test.cpp
   * Author:         Zichen Zhang, Mingshuai Li
   * Version:        V3.00
-  * Date:           2022.1.29
+  * Date:           2022.2.1
   * Description:    The implementation for the class UnitTest
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
 
 
-#include "unit_test.hpp"
+#include "../include/unit_test.hpp"
 
 
 void UnitTest::TestMapDouble2Uchar()
@@ -121,11 +121,11 @@ void UnitTest::TestRotate()
 
     cv::Mat correct = cv::Mat::zeros(10, 10, CV_8UC1);
 
-    uchar values[6] = {70, 60, 60, 50, 40, 30};
-    for (int i = 0; i < 7; i++)
-        for (int j = 0; j < 6; j++)
-            correct.at<uchar>(i, j + 4) = values[j];
-    
+    uchar values[7] = {70, 60, 50, 40, 40, 30, 20};
+    for (int i = 2; i < 9; i++)
+        for (int j = 2; j < 9; j++)
+            correct.at<uchar>(i, j) = values[j - 2];
+
     double mean_squared_error = 0.0;
     for (int i = 0; i < 10; i++)
         for (int j = 0; j < 10; j++)
@@ -242,7 +242,7 @@ void UnitTest::TestGammaTransform()
     cv::Mat image = image_->GammaTransform(1.1, 1.1);
 
     cv::Mat correct = cv::Mat::zeros(7, 7, CV_8UC1);
-    uchar values[7] = {13.848, 29.684, 46.369, 63.630, 81.332, 99.394, 128.466};
+    uchar values[7] = {13, 29, 46, 63, 81, 99, 117};
     for (int i = 0; i < 7; i++)
         for (int j = 0; j < 7; j++)
             correct.at<uchar>(i, j) = values[i];
@@ -267,7 +267,7 @@ void UnitTest::TestLogTransform()
     cv::Mat image = image_->LogTransform(7);
 
     cv::Mat correct = cv::Mat::zeros(7, 7, CV_8UC1);
-    uchar values[7] = {16.785, 21.312, 24.038, 25.995, 27.523, 28.776, 29.839};
+    uchar values[7] = {16, 21, 24, 25, 27, 28, 29};
     for (int i = 0; i < 7; i++)
         for (int j = 0; j < 7; j++)
             correct.at<uchar>(i, j) = values[i];
@@ -292,7 +292,7 @@ void UnitTest::TestNormalizationTransform()
     cv::Mat image = image_->NormalizationTransform(20, 69);
 
     cv::Mat correct = cv::Mat::zeros(7, 7, CV_8UC1);
-    uchar values[7] = {0, 0, 51.3, 103.34, 155.38, 208.158, 255};
+    uchar values[7] = {0, 0, 52, 104, 156, 208, 255};
     for (int i = 0; i < 7; i++)
         for (int j = 0; j < 7; j++)
             correct.at<uchar>(i, j) = values[i];
@@ -531,6 +531,28 @@ UnitTest::~UnitTest()
 }
 
 
-
+void UnitTest::RunTest()
+{
+    TestMapDouble2Uchar();
+    TestConvolve();
+    TestGetImageHeight();
+    TestGetImageWidth();
+    TestResize();
+    TestRotate();
+    TestFlipLeftRight();
+    TestFlipUpDown();
+    TestBrightnessTransform();
+    TestInverseTransform();
+    TestGammaTransform();
+    TestLogTransform();
+    TestNormalizationTransform();
+    TestThresholdTransform();
+    TestWindowTransform();
+    TestLowPassFilter();
+    TestHighPassFilter();
+    TestBandPassFilter();
+    TestGaussianFilter();
+    TestLaplacianFilter();
+}
 
 
