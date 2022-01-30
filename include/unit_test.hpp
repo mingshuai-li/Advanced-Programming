@@ -3,7 +3,7 @@
   * FileName:       unit_test.hpp
   * Author:         Zichen Zhang, Mingshuai Li
   * Version:        V3.00
-  * Date:           2022.1.29
+  * Date:           2022.2.1
   * Description:    The header file for the class UnitTest
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
@@ -134,6 +134,12 @@ class UnitTest
         * The destructor
         */
         ~UnitTest();
+
+        /*
+        * Runs the unit tests
+        */
+        void RunTest();
+
 };
 
 
