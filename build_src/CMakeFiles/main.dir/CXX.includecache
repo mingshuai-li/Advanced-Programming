@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/image.hpp
+iostream
+-
+opencv2/opencv.hpp
+-
+opencv2/core/core.hpp
+-
+opencv2/imgcodecs.hpp
+-
+
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/image_processing_system.hpp
+memory
+-
+image.hpp
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/image.hpp
+menu.hpp
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/menu.hpp
+
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/menu.hpp
+iostream
+-
+
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/src/image.cpp
+../include/image.hpp
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/image.hpp
+
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/src/image_processing_system.cpp
+../include/image_processing_system.hpp
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/image_processing_system.hpp
+
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/src/main.cpp
+../include/image_processing_system.hpp
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/image_processing_system.hpp
+
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/src/menu.cpp
+../include/menu.hpp
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/menu.hpp
+

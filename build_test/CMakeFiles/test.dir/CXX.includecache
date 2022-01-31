@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/image.hpp
+iostream
+-
+opencv2/opencv.hpp
+-
+opencv2/core/core.hpp
+-
+opencv2/imgcodecs.hpp
+-
+
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/unit_test.hpp
+memory
+-
+image.hpp
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/image.hpp
+
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/test/image.cpp
+../include/image.hpp
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/image.hpp
+
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/test/test.cpp
+../include/unit_test.hpp
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/unit_test.hpp
+
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/test/unit_test.cpp
+../include/unit_test.hpp
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/include/unit_test.hpp
+
