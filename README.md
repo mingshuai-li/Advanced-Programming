@@ -72,9 +72,28 @@ The version will be considered as "complete" if
 - Code including test functions are refined.
 - CMake is added.
 
-### TO DO LIST
-1.CMake
+## Optimization results
+----
 
-2.Measure performance?
+After the architecture is refactored, profile the code using gprof and the results of Geometric Transform are as follows:
+
+Before refactored:
+![Before refactored](/image/Geometric_Transform_before.png)
+After refactored:
+![Before refactored](/image/Geometric_Transform_after.png)
+Running time consumption from 0.14 seconds to 0.12 seconds.
+
+Then the convolve function is refined:
+
+Before refined:
+![Before refined](/image/convolve.jpg)
+
+After refined:
+![After refined](/image/refineconvolve.jpg)
+
+When running all the filtering functions, the time consumption is from 1.51 seconds to 1.18 seconds.
+
+
+
 
 
