@@ -9,7 +9,7 @@ Generally image processing is a very comprehensive area and it is also suitable 
 ### Sprint 1 (Basics)
 ----
 
-Input an image using a library such as [OpenCV](https://opencv.org/) or [stb_image](https://github.com/nothings/stb) and implement various operations on images.
+- Input an image using a library such as [OpenCV](https://opencv.org/) or [stb_image](https://github.com/nothings/stb) and implement various operations on images.
 
 Basic types of operations on images: 
 - Image Enhancement: brightness transform, inverse transform, gamma transform, log transform, normalization transform, threshold transform, window transform
@@ -33,9 +33,8 @@ The version will be considered as "complete" if
 ### Sprint 2 (OOP)
 ----
 
-Organize the functions into classes according to the types of the operations.
-
-Utilize smart pointers instead of raw pointers.
+- Organize the functions into classes according to the types of the operations.
+- Utilize smart pointers instead of raw pointers.
 
 
 **Sprint 2: Definition of "done"**
@@ -52,15 +51,11 @@ The version will be considered as "complete" if
 ### Sprint 3 (Refactoring and Refining)
 ----
 
-Refactor the class architecture according to the review in Sprint 2.
-
-Seperate the files into different folders.
-
-Refine some code such as the implementation Convole().
-
-Refine test functions.
-
-Add CMake.
+- Refactor the class architecture according to the review in Sprint 2.
+- Seperate the files into different folders.
+- Refine some code such as the implementation Convole().
+- Refine test functions.
+- Add CMake.
 
 
 **Sprint 3: Definition of "done"**
