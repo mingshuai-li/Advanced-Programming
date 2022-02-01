@@ -564,7 +564,7 @@ cv::Mat Image::LowPassFilter(int kernel_height, int kernel_width) const
     cv::Mat kernel = cv::Mat::ones(kernel_height, kernel_width, CV_64FC1);
 
     // Computes the uniform kernel
-    const double kernel_coefficient = 1 / static_cast<double>(kernel_height * kernel_width);
+    const double kernel_coefficient = 1.0 / static_cast<double>(kernel_height * kernel_width);
     for (int i = 0; i < kernel_height; i++)
         for (int j = 0; j < kernel_width; j++)
             kernel.at<double>(i, j) *= kernel_coefficient;
