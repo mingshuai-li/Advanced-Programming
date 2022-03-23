@@ -2,15 +2,44 @@
  
   * FileName:       image_processing_system.cpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V2.00
-  * Date:           2021.12.23
+  * Version:        V3.00
+  * Date:           2022.2.1
   * Description:    The implementation for the class ImageProcessingSystem
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
 
 
-#include "image_processing_system.hpp"
+#include "../include/image_processing_system.hpp"
+
+
+void ImageProcessingSystem::RunGeometricTransform()
+{
+
+    int choice = menu_->GeometricTransformMenu();
+
+    double para1 = 0.0;
+    double para2 = 0.0;
+
+    switch (choice)
+    {
+        case GeometricTransform::Resize:
+            std::cout << "Please enter the height scaling factor and the width scaling factor: ";
+            std::cin >> para1 >> para2;
+            output_image_ = image_->Resize(para1, para2); break;
+        case GeometricTransform::Rotate:
+            std::cout << "Please enter the angle that the input image rotates: ";
+            std::cin >> para1;
+            output_image_ = image_->Rotate(para1); break;
+        case GeometricTransform::FlipLeftRight:
+            output_image_ = image_->FlipLeftRight(); break;
+        case GeometricTransform::FlippUpDown:
+            output_image_ = image_->FlipUpDown(); break;
+        default:
+            std::cout << "ERROR:Wrong choice!\n"; break;
+    }
+
+}
 
 
 void ImageProcessingSystem::RunImageEnhancement()
@@ -21,76 +50,37 @@ void ImageProcessingSystem::RunImageEnhancement()
     double para1 = 0.0;
     double para2 = 0.0;
 
-    if (choice == 1)
+    switch (choice)
     {
-        std::cout << "Please enter the change of the brightness: ";
-        std::cin >> para1;
-        output_image_ = image_enhancement_->BrightnessTransform(input_image_, para1);
+        case ImageEnhancement::Brightness:
+            std::cout << "Please enter the change of the brightness: ";
+            std::cin>>para1;
+            output_image_ = image_->BrightnessTransform(para1); break;
+        case ImageEnhancement::Inverse:
+            output_image_ = image_->InverseTransform(); break;
+        case ImageEnhancement::Gamma:
+            std::cout << "Please enter the coefficient and the exponent: ";
+            std::cin >> para1 >> para2;
+            output_image_ = image_->GammaTransform(para1, para2); break;
+        case ImageEnhancement::Log:
+            std::cout << "Please enter the coefficient: ";
+            std::cin >> para1;
+            output_image_ = image_->LogTransform(para1); break;
+        case ImageEnhancement::Normalization:
+            std::cout << "Please enter the lower threshold and the upper threshold: ";
+            std::cin >> para1 >> para2;
+            output_image_ = image_->NormalizationTransform(para1, para2); break;
+        case ImageEnhancement::Threshold:
+            std::cout << "Please enter the threshold: ";
+            std::cin >> para1;
+            output_image_ = image_->ThresholdTransform(para1); break;
+        case ImageEnhancement::Window:
+            std::cout << "Please enter the lower threshold and the upper threshold: ";
+            std::cin >> para1 >> para2;
+            output_image_ = image_->WindowTransform(para1, para2); break;
+        default:
+            std::cout << "ERROR:Wrong choice!\n"; break;
     }
-    else if (choice == 2)
-        output_image_ = image_enhancement_->InverseTransform(input_image_);
-    else if (choice == 3)
-    {
-        std::cout << "Please enter the coefficient and the exponent: ";
-        std::cin >> para1 >> para2;
-        output_image_ = image_enhancement_->GammaTransform(input_image_, para1, para2);
-    }
-    else if (choice == 4)
-    {
-        std::cout << "Please enter the coefficient: ";
-        std::cin >> para1;
-        output_image_ = image_enhancement_->LogTransform(input_image_, para1);
-    }
-    else if (choice == 5)
-    {
-        std::cout << "Please enter the lower threshold and the upper threshold: ";
-        std::cin >> para1 >> para2;
-        output_image_ = image_enhancement_->NormalizationTransform(input_image_, para1, para2);
-    }
-    else if (choice == 6)
-    {
-        std::cout << "Please enter the threshold: ";
-        std::cin >> para1;
-        output_image_ = image_enhancement_->ThresholdTransform(input_image_, para1);
-    }
-    else if (choice == 7)
-    {
-        std::cout << "Please enter the lower threshold and the upper threshold: ";
-        std::cin >> para1 >> para2;
-        output_image_ = image_enhancement_->WindowTransform(input_image_, para1, para2);
-    }
-    else
-        std::cout << "ERROR:Wrong choice!\n";
-
-}
-
-
-void ImageProcessingSystem::RunGeometricTransform()
-{
-
-    int choice = menu_->GeometricTransformMenu();
-
-    double para1 = 0.0;
-    double para2 = 0.0;
-  
-    if (choice == 1)
-    {
-        std::cout << "Please enter the height scaling factor and the width scaling factor: ";
-        std::cin >> para1 >> para2;
-        output_image_ = geometric_transform_->Resize(input_image_, para1, para2);
-    }
-    else if (choice == 2)
-    {
-        std::cout << "Please enter the angle that the input image rotates: ";
-        std::cin >> para1;
-        output_image_ = geometric_transform_->Rotate(input_image_, para1);
-    }
-    else if (choice == 3)
-        output_image_ = geometric_transform_->FlipLeftRight(input_image_);
-    else if (choice == 4)
-        output_image_ = geometric_transform_->FlipUpDown(input_image_);
-    else
-        std::cout << "ERROR:Wrong choice!\n";
 
 }
 
@@ -105,44 +95,40 @@ void ImageProcessingSystem::RunFiltering()
     int kernel_height = 0;
     int kernel_width = 0;
 
-    if (choice == 1)
+    switch (choice)
     {
-        std::cout << "Please enter the kernel height and the kernel width: ";
-        std::cin >> kernel_height >> kernel_width;
-        output_image_ = filtering_->LowPassFilter(input_image_, kernel_height, kernel_width);
+        case Filtering::LowPass:
+            std::cout << "Please enter the kernel height and the kernel width: ";
+            std::cin >> kernel_height >> kernel_width;
+            output_image_ = image_->LowPassFilter(kernel_height, kernel_width); break;
+        case Filtering::HighPass:
+            output_image_ = image_->HighPassFilter(); break;
+        case Filtering::BandPass:
+            std::cout << "Please enter the central frequency and the bandwidth: ";
+            std::cin>> para1 >> para2;
+            output_image_ = image_->BandPassFilter(para1, para2); break;
+        case Filtering::Gaussian:
+            std::cout << "Please enter the kernel height, the kernel width and the kernel sigma: ";
+            std::cin >> kernel_height >> kernel_width >> para1;
+            output_image_ = image_->GaussianFilter(kernel_height, kernel_width, para1); break;
+        case Filtering::Laplacian:
+            output_image_ = image_->LaplacianFilter(); break;
+        default:
+            std::cout << "ERROR:Wrong choice!\n"; break;
     }
-    else if (choice == 2)
-        output_image_ = filtering_->HighPassFilter(input_image_);
-    else if (choice == 3)
-    {
-        std::cout << "Please enter the central frequency and the bandwidth: ";
-        std::cin >> para1 >> para2;
-        output_image_ = filtering_->BandPassFilter(input_image_, para1, para2);
-    }
-    else if (choice == 4)
-    {
-        std::cout << "Please enter the kernel height, the kernel width and the kernel sigma: ";
-        std::cin >> kernel_height >> kernel_width >> para1;
-        output_image_ = filtering_->GaussianFilter(input_image_, kernel_height, kernel_width, para1);
-    }
-    else if (choice == 5)
-        output_image_ = filtering_->LaplacianFilter(input_image_);
-    else
-        std::cout << "ERROR:Wrong choice!\n";
 
 }
 
 
 void ImageProcessingSystem::UpdateInputImage()
 {
-    input_image_ = output_image_.clone();
+    image_->SetNewImage(output_image_);
 }
 
 
 void ImageProcessingSystem::UpdateInputImage(const std::string& file_name)
 {
-    input_image_ = image_io_->ReadImage(file_name);
-    input_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
+    image_->SetNewImage(file_name);
 }
 
 
@@ -168,28 +154,32 @@ void ImageProcessingSystem::RunUpdateInputImage()
 
 void ImageProcessingSystem::DisplayCurrentInputImage() const
 {
-    image_io_->DisplayImage(input_image_, "Current Input Image");
+    image_->DisplayImage("Current Input Image");
 }
 
 
 void ImageProcessingSystem::DisplayCurrentOutputImage() const
 {
-    image_io_->DisplayImage(output_image_, "Current Output Image");
+    image_->DisplayImage(output_image_, "Current Output Image");
+}
+
+
+void ImageProcessingSystem::SaveOutputImage() const
+{
+    std::string file_path = "";
+    std::cout << "Please enter the file path: ";
+    std::cin >> file_path;
+    cv::imwrite(file_path, output_image_);
 }
 
 
 ImageProcessingSystem::ImageProcessingSystem(const std::string& file_name)
 {
 
-    image_io_ = std::make_unique<ImageIO>();
-    image_enhancement_ = std::make_unique<ImageEnhancement>();
-    geometric_transform_ = std::make_unique<GeometricTransform>();
-    filtering_ = std::make_unique<Filtering>();
+    image_ = std::make_unique<Image>(file_name);
     menu_ = std::make_unique<Menu>();
 
-    input_image_ = image_io_->ReadImage(file_name);
-    input_image_ = ImageTypeConversion::ConvertRGB2GrayScale(input_image_);
-    output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
+    output_image_ = cv::Mat::zeros(image_->GetImageHeight(), image_->GetImageWidth(), CV_8UC1);
 
 }
 
@@ -197,14 +187,10 @@ ImageProcessingSystem::ImageProcessingSystem(const std::string& file_name)
 ImageProcessingSystem::ImageProcessingSystem(const ImageProcessingSystem& image_processing_system)
 {
 
-    image_io_ = std::make_unique<ImageIO>();
-    image_enhancement_ = std::make_unique<ImageEnhancement>();
-    geometric_transform_ = std::make_unique<GeometricTransform>();
-    filtering_ = std::make_unique<Filtering>();
+    image_ = std::make_unique<Image>(*(image_processing_system.image_));
     menu_ = std::make_unique<Menu>();
 
-    input_image_ = image_processing_system.input_image_.clone();
-    output_image_ = cv::Mat::zeros(input_image_.rows, input_image_.cols, CV_8UC1);
+    output_image_ = cv::Mat::zeros(image_->GetImageHeight(), image_->GetImageWidth(), CV_8UC1);
 
 }
 
@@ -223,22 +209,19 @@ cv::Mat ImageProcessingSystem::Run()
     {
         choice = menu_->MainMenu();
 
-        if (choice == 1)
-            RunImageEnhancement();
-        else if (choice == 2)
-            RunGeometricTransform();
-        else if (choice == 3)
-            RunFiltering();
-        else if (choice == 4)
-            RunUpdateInputImage();
-        else if (choice == 5)
-            DisplayCurrentInputImage();
-        else if (choice == 6)
-            DisplayCurrentOutputImage();
-        else if (choice == 7)
-            return output_image_;
-        else
-            std::cout << "ERROR:Wrong choice!\n";
+        switch (choice)
+        {
+            case 1: RunGeometricTransform(); break;
+            case 2: RunImageEnhancement(); break;
+            case 3: RunFiltering(); break;
+            case 4: RunUpdateInputImage(); break;
+            case 5: DisplayCurrentInputImage(); break;
+            case 6: DisplayCurrentOutputImage(); break;
+            case 7: SaveOutputImage(); break;
+            case 8: return output_image_;
+            default: std::cout << "ERROR:Wrong choice!\n"; break;
+        }
+
     }
 
 }

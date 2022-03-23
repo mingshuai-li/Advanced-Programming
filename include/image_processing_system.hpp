@@ -2,43 +2,47 @@
  
   * FileName:       image_processing_system.hpp
   * Author:         Zichen Zhang, Mingshuai Li
-  * Version:        V2.00
-  * Date:           2021.12.23
+  * Version:        V3.00
+  * Date:           2022.2.1
   * Description:    The header file for the class ImageProcessingSystem
   * Project:        The group project for the WS2021 course IN1503 Advanced Programming
 
 **********************************************************************************/
 
 
+#ifndef IMAGE_PROCESSING_SYSTEM_H
+#define IMAGE_PROCESSING_SYSTEM_H
+
+
 #include <memory>
-#include "image_io.hpp"
-#include "image_type_conversion.hpp"
-#include "image_enhancement.hpp"
-#include "geometric_transform.hpp"
-#include "filtering.hpp"
+#include "image.hpp"
 #include "menu.hpp"
+
+
+enum GeometricTransform {Resize = 1, Rotate, FlipLeftRight, FlippUpDown};
+
+enum ImageEnhancement {Brightness = 1, Inverse, Gamma, Log, Normalization, Threshold, Window};
+
+enum Filtering {LowPass = 1, HighPass, BandPass, Gaussian, Laplacian};
 
 
 class ImageProcessingSystem
 {
 
     private:
-        std::unique_ptr<ImageIO> image_io_;
-        std::unique_ptr<ImageEnhancement> image_enhancement_;
-        std::unique_ptr<GeometricTransform> geometric_transform_;
-        std::unique_ptr<Filtering> filtering_;
+        std::unique_ptr<Image> image_;
         std::unique_ptr<Menu> menu_;
-        cv::Mat input_image_;
         cv::Mat output_image_;
-        /*
-        * Runs the image enhancement section of the system
-        */
-        void RunImageEnhancement();
 
         /*
         * Runs the geometric transform section of the system
         */
         void RunGeometricTransform();
+
+        /*
+        * Runs the image enhancement section of the system
+        */
+        void RunImageEnhancement();
 
         /*
         * Runs the filtering section of the system
@@ -71,6 +75,11 @@ class ImageProcessingSystem
         * Displays the current input image in the system
         */
         void DisplayCurrentOutputImage() const;
+
+        /*
+        * Saves the output image as a file
+        */
+        void SaveOutputImage() const;
     
     public:
         /*
@@ -98,5 +107,8 @@ class ImageProcessingSystem
         cv::Mat Run();
 
 };
+
+
+#endif
 
 
