@@ -1,0 +1,3 @@
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/build_src/CMakeFiles/rebuild_cache.dir
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/build_src/CMakeFiles/edit_cache.dir
+/home/lims/ap/project_sprint3/21ws-ap-group-cs-project/build_src/CMakeFiles/main.dir
